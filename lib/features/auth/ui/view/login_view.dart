@@ -48,7 +48,7 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     return CustomScaffold(
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: CustomScrollView(
           slivers: [
             SliverToBoxAdapter(
