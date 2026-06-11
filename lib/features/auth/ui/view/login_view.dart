@@ -4,9 +4,11 @@ import '../../../../core/assets/assets.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/theme/colors.dart';
+import '../../../../core/widgets/custom_button.dart';
 import '../../../../core/widgets/custom_scaffold.dart';
 import 'widgets/login_form.dart';
 import 'widgets/remember_me_and_forget_password.dart';
+import 'widgets/social_auth_button.dart';
 
 class LoginView extends StatefulWidget {
   static const String routeName = '/login';
@@ -75,6 +77,42 @@ class _LoginViewState extends State<LoginView> {
                 _isRememberMeChecked.value = value ?? false;
               },
               onForgetPasswordPressed: () {},
+            ),
+            vGap(24),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 32.0),
+              child: CustomButton(
+                label: AppStrings.signIn,
+                onPressed: () {
+                  if (_formKey.currentState?.validate() ?? false) {}
+                },
+              ),
+            ),
+            vGap(32),
+            Align(
+              alignment: Alignment.center,
+              child: Text(
+                AppStrings.or,
+                style: AppTextStyles.font16Medium.withColor(AppColors.darkGray),
+              ),
+            ),
+            vGap(32),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 32.0),
+              child: SocialAuthButton(
+                label: AppStrings.loginWithGoogle,
+                assetPath: Assets.assetsImagesGoogleIcon,
+                onPressed: () {},
+              ),
+            ),
+            vGap(16),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 32.0),
+              child: SocialAuthButton(
+                label: AppStrings.loginWithFacebook,
+                assetPath: Assets.assetsImagesFacebookIcon,
+                onPressed: () {},
+              ),
             ),
           ],
         ),

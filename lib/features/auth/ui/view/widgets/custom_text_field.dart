@@ -36,6 +36,12 @@ class CustomTextField extends StatelessWidget {
       validator: validator,
       onFieldSubmitted: onFieldSubmitted,
       decoration: InputDecoration(
+        isDense: true,
+
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 24,
+          vertical: 16,
+        ),
         hintText: hintText,
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
