@@ -6,6 +6,7 @@ import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/theme/colors.dart';
 import '../../../../core/widgets/custom_button.dart';
 import '../../../../core/widgets/custom_scaffold.dart';
+import 'widgets/auth_footer.dart';
 import 'widgets/login_form.dart';
 import 'widgets/remember_me_and_forget_password.dart';
 import 'widgets/social_auth_button.dart';
@@ -48,70 +49,89 @@ class _LoginViewState extends State<LoginView> {
     return CustomScaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Align(
-              alignment: Alignment.center,
-              child: Image.asset(
-                Assets.assetsImagesAuthLogo,
-                width: MediaQuery.sizeOf(context).width * 0.4,
-                height: MediaQuery.sizeOf(context).height * 0.2,
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Align(
+                    alignment: Alignment.center,
+                    child: Image.asset(
+                      Assets.assetsImagesAuthLogo,
+                      width: MediaQuery.sizeOf(context).width * 0.4,
+                      height: MediaQuery.sizeOf(context).height * 0.2,
+                    ),
+                  ),
+                  Text(
+                    AppStrings.signIn,
+                    style: AppTextStyles.font24Bold.withColor(AppColors.black),
+                  ),
+                  vGap(16),
+                  LoginForm(
+                    formKey: _formKey,
+                    emailController: _emailController,
+                    passwordController: _passwordController,
+                    isPasswordVisible: _isPasswordVisible,
+                  ),
+                  vGap(16),
+                  RememberMeAndForgetPassword(
+                    isChecked: _isRememberMeChecked,
+                    onChanged: (value) {
+                      _isRememberMeChecked.value = value ?? false;
+                    },
+                    onForgetPasswordPressed: () {},
+                  ),
+                  vGap(24),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                    child: CustomButton(
+                      label: AppStrings.signIn,
+                      onPressed: () {
+                        if (_formKey.currentState?.validate() ?? false) {}
+                      },
+                    ),
+                  ),
+                  vGap(32),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      AppStrings.or,
+                      style: AppTextStyles.font16Medium.withColor(
+                        AppColors.darkGray,
+                      ),
+                    ),
+                  ),
+                  vGap(32),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                    child: SocialAuthButton(
+                      label: AppStrings.loginWithGoogle,
+                      assetPath: Assets.assetsImagesGoogleIcon,
+                      onPressed: () {},
+                    ),
+                  ),
+                  vGap(16),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                    child: SocialAuthButton(
+                      label: AppStrings.loginWithFacebook,
+                      assetPath: Assets.assetsImagesFacebookIcon,
+                      onPressed: () {},
+                    ),
+                  ),
+                ],
               ),
             ),
-            Text(
-              AppStrings.signIn,
-              style: AppTextStyles.font24Bold.withColor(AppColors.black),
-            ),
-            vGap(16),
-            LoginForm(
-              formKey: _formKey,
-              emailController: _emailController,
-              passwordController: _passwordController,
-              isPasswordVisible: _isPasswordVisible,
-            ),
-            vGap(16),
-            RememberMeAndForgetPassword(
-              isChecked: _isRememberMeChecked,
-              onChanged: (value) {
-                _isRememberMeChecked.value = value ?? false;
-              },
-              onForgetPasswordPressed: () {},
-            ),
-            vGap(24),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32.0),
-              child: CustomButton(
-                label: AppStrings.signIn,
-                onPressed: () {
-                  if (_formKey.currentState?.validate() ?? false) {}
-                },
-              ),
-            ),
-            vGap(32),
-            Align(
-              alignment: Alignment.center,
-              child: Text(
-                AppStrings.or,
-                style: AppTextStyles.font16Medium.withColor(AppColors.darkGray),
-              ),
-            ),
-            vGap(32),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32.0),
-              child: SocialAuthButton(
-                label: AppStrings.loginWithGoogle,
-                assetPath: Assets.assetsImagesGoogleIcon,
-                onPressed: () {},
-              ),
-            ),
-            vGap(16),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32.0),
-              child: SocialAuthButton(
-                label: AppStrings.loginWithFacebook,
-                assetPath: Assets.assetsImagesFacebookIcon,
-                onPressed: () {},
+
+            SliverFillRemaining(
+              hasScrollBody: false,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  AuthFooter(onPressed: () {}),
+                  vGap(24),
+                ],
               ),
             ),
           ],
