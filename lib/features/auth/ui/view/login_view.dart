@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../core/assets/app_strings.dart';
 import '../../../../core/assets/assets.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/theme/colors.dart';
 import '../../../../core/widgets/custom_scaffold.dart';
-import 'widgets/custom_text_field.dart';
+import 'widgets/login_form.dart';
+import 'widgets/remember_me_and_forget_password.dart';
 
 class LoginView extends StatefulWidget {
   static const String routeName = '/login';
@@ -19,11 +19,16 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
+  late ValueNotifier<bool> _isPasswordVisible;
+  late ValueNotifier<bool> _isRememberMeChecked;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
+    _isPasswordVisible = ValueNotifier<bool>(false);
+    _isRememberMeChecked = ValueNotifier<bool>(false);
     super.initState();
   }
 
@@ -31,6 +36,8 @@ class _LoginViewState extends State<LoginView> {
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _isPasswordVisible.dispose();
+    _isRememberMeChecked.dispose();
     super.dispose();
   }
 
@@ -55,19 +62,20 @@ class _LoginViewState extends State<LoginView> {
               style: AppTextStyles.font24Bold.withColor(AppColors.black),
             ),
             vGap(16),
-            CustomTextField(
-              hintText: AppStrings.email,
-              prefixIcon: const Icon(Icons.email),
-              controller: _emailController,
+            LoginForm(
+              formKey: _formKey,
+              emailController: _emailController,
+              passwordController: _passwordController,
+              isPasswordVisible: _isPasswordVisible,
             ),
             vGap(16),
-            CustomTextField(
-              hintText: AppStrings.password,
-              prefixIcon: const Icon(Icons.lock),
-              controller: _passwordController,
-              obscureText: true,
+            RememberMeAndForgetPassword(
+              isChecked: _isRememberMeChecked,
+              onChanged: (value) {
+                _isRememberMeChecked.value = value ?? false;
+              },
+              onForgetPasswordPressed: () {},
             ),
-            vGap(16),
           ],
         ),
       ),

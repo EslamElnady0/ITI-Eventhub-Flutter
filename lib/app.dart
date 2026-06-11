@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'core/router/app_router.dart';
+import 'core/theme/app_theme.dart';
 
 class EventHubApp extends StatelessWidget {
   const EventHubApp({super.key});
@@ -9,6 +10,7 @@ class EventHubApp extends StatelessWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       routerConfig: AppRouter.router,
+      theme: AppTheme.lightTheme,
       title: 'EventHub',
     );
   }

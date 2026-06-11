@@ -14,6 +14,10 @@ class AppTextStyles {
     fontSize: 16,
     fontWeight: FontWeightHelper.medium,
   );
+  static TextStyle font14Medium = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeightHelper.medium,
+  );
   static TextStyle font18Regular = TextStyle(
     fontSize: 18,
     fontWeight: FontWeightHelper.regular,
