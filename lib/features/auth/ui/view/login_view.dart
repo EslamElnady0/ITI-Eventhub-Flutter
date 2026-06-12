@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../core/assets/app_strings.dart';
 import '../../../../core/assets/assets.dart';
 import '../../../../core/helpers/spacing.dart';
@@ -6,6 +7,7 @@ import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/theme/colors.dart';
 import '../../../../core/widgets/custom_button.dart';
 import '../../../../core/widgets/custom_scaffold.dart';
+import 'signup_view.dart';
 import 'widgets/auth_footer.dart';
 import 'widgets/login_form.dart';
 import 'widgets/remember_me_and_forget_password.dart';
@@ -120,6 +122,7 @@ class _LoginViewState extends State<LoginView> {
                       onPressed: () {},
                     ),
                   ),
+                  vGap(16),
                 ],
               ),
             ),
@@ -129,7 +132,13 @@ class _LoginViewState extends State<LoginView> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  AuthFooter(onPressed: () {}),
+                  AuthFooter(
+                    text: AppStrings.dontHaveAccount,
+                    buttonText: AppStrings.signUp,
+                    onPressed: () {
+                      context.push(SignupView.routeName);
+                    },
+                  ),
                   vGap(24),
                 ],
               ),

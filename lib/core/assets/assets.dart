@@ -34,6 +34,10 @@ class Assets {
   /// assets/images/password.svg
   static const String assetsImagesPassword = "assets/images/password.svg";
 
+  /// Assets for assetsImagesProfileIcon
+  /// assets/images/profile_icon.svg
+  static const String assetsImagesProfileIcon = "assets/images/profile_icon.svg";
+
   /// Assets for assetsImagesSecondOnboarding
   /// assets/images/second_onboarding.png
   static const String assetsImagesSecondOnboarding = "assets/images/second_onboarding.png";
