@@ -3,7 +3,8 @@ import '../../../../../core/assets/app_strings.dart';
 import '../../../../../core/widgets/custom_button.dart';
 
 class EventDetailsBottom extends StatelessWidget {
-  const EventDetailsBottom({super.key});
+  final VoidCallback onBuyTicket;
+  const EventDetailsBottom({super.key, required this.onBuyTicket});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class EventDetailsBottom extends StatelessWidget {
       ),
       child: CustomButton(
         label: AppStrings.buyTicket("\$120"),
-        onPressed: () {},
+        onPressed: onBuyTicket,
       ),
     );
   }

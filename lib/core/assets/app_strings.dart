@@ -46,4 +46,11 @@ class AppStrings {
       'Enjoy your favorite dishe and a lovely your friends and family and have a great time. Food from local food trucks will be available for purchase.';
   static const String readMore = 'Read More...';
   static String buyTicket(String price) => 'Buy Ticket $price';
+  static const String events = "Events";
+  static const String upcoming = "UPCOMING";
+  static const String pastEvents = "PAST EVENTS";
+  static const String noUpcomingEvent = "No Upcoming Event";
+  static const String noPastEvent = "No Past Event";
+  static const String loremIpsum = "Lorem ipsum dolor sit amet, consectetur ";
+  static const String exploreEvents = "Explore Events";
 }

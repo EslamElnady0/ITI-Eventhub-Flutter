@@ -14,6 +14,10 @@ class Assets {
   /// assets/images/bookmark_icon.svg
   static const String assetsImagesBookmarkIcon = "assets/images/bookmark_icon.svg";
 
+  /// Assets for assetsImagesCalender
+  /// assets/images/calender.png
+  static const String assetsImagesCalender = "assets/images/calender.png";
+
   /// Assets for assetsImagesCalenderIcon
   /// assets/images/calender_icon.svg
   static const String assetsImagesCalenderIcon = "assets/images/calender_icon.svg";
