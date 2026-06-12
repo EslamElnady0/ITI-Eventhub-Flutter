@@ -35,7 +35,7 @@ class AppRouter {
   static final router = GoRouter(
     routes: [
       GoRoute(
-        path: '/sss',
+        path: '/',
         pageBuilder: (context, state) =>
             _buildPageWithTransition(context, state, const SplashView()),
       ),
