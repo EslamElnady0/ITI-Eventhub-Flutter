@@ -16,10 +16,12 @@ class SplashView extends StatefulWidget {
 
 class _SplashViewState extends State<SplashView> {
   late Timer _timer;
+
   @override
   void initState() {
     _timer = Timer(const Duration(seconds: 2), () {
-      context.go(OnboardingView.routeName);
+      if (!mounted) return;
+      context.pushReplacement(OnboardingView.routeName);
     });
     super.initState();
   }
