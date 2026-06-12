@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/helpers/spacing.dart';
 import '../../../../core/widgets/custom_scaffold.dart';
+import 'widgets/event_details_header.dart';
 
 class EventDetailsView extends StatelessWidget {
   static const String routeName = '/event-details';
@@ -10,19 +10,16 @@ class EventDetailsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 10),
-            Text(
-              'Event Details',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+      ignoreTopSafeArea: true,
+      body: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [EventDetailsHeader()],
             ),
-            vGap(20),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

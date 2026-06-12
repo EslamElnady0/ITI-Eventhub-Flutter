@@ -30,7 +30,7 @@ class AppStrings {
   static const String confirmPassword = 'Confirm password';
   static const String fullName = 'Full name';
   static const String eventDetails = 'Event Details';
-  static const String going = 'Going';
+  static String going(int count) => '+$count Going';
   static const String invite = 'Invite';
   static const String internationalBandMusicConcert =
       'International Band Music Concert';

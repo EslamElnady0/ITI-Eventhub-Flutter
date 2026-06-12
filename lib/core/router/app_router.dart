@@ -34,7 +34,7 @@ class AppRouter {
   static final router = GoRouter(
     routes: [
       GoRoute(
-        path: '/',
+        path: '/sss',
         pageBuilder: (context, state) =>
             _buildPageWithTransition(context, state, const SplashView()),
       ),
@@ -54,7 +54,7 @@ class AppRouter {
             _buildPageWithTransition(context, state, const SignupView()),
       ),
       GoRoute(
-        path: EventDetailsView.routeName,
+        path: '/',
         pageBuilder: (context, state) =>
             _buildPageWithTransition(context, state, const EventDetailsView()),
       ),
