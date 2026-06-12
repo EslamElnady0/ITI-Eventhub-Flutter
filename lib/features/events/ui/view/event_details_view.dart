@@ -19,20 +19,20 @@ class EventDetailsView extends StatelessWidget {
         children: [
           CustomScrollView(
             slivers: [
+              const EventDetailsHeader(),
               SliverToBoxAdapter(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    EventDetailsHeader(),
-                    vGap(MediaQuery.sizeOf(context).height * 0.04 + 20),
+                    vGap(20),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          EventInfoSection(),
+                          const EventInfoSection(),
                           vGap(24),
-                          AboutEventSection(),
+                          const AboutEventSection(),
                           vGap(140),
                         ],
                       ),
