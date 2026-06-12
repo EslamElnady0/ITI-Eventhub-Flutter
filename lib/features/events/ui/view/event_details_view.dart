@@ -33,7 +33,7 @@ class EventDetailsView extends StatelessWidget {
                           EventInfoSection(),
                           vGap(24),
                           AboutEventSection(),
-                          vGap(120),
+                          vGap(140),
                         ],
                       ),
                     ),

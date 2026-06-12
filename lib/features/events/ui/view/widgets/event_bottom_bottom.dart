@@ -12,7 +12,7 @@ class EventDetailsBottom extends StatelessWidget {
         left: 52,
         right: 52,
         top: 62,
-        bottom: MediaQuery.paddingOf(context).bottom + 16,
+        bottom: MediaQuery.paddingOf(context).bottom + 8,
       ),
       decoration: BoxDecoration(
         gradient: LinearGradient(
