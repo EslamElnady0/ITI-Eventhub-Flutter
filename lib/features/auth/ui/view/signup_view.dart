@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:iti_flutter_proj/features/auth/ui/view/login_view.dart';
-
 import '../../../../core/assets/app_strings.dart';
 import '../../../../core/assets/assets.dart';
 import '../../../../core/helpers/spacing.dart';

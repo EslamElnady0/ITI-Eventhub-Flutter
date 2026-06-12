@@ -94,11 +94,11 @@ class _OnboardingViewState extends State<OnboardingView> {
         curve: Curves.easeInOut,
       );
     } else {
-      context.pushReplacement(LoginView.routeName);
+      context.go(LoginView.routeName);
     }
   }
 
   _onSkip() {
-    context.pushReplacement(LoginView.routeName);
+    context.go(LoginView.routeName);
   }
 }

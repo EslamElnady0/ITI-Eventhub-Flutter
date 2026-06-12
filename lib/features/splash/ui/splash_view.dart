@@ -15,21 +15,15 @@ class SplashView extends StatefulWidget {
 }
 
 class _SplashViewState extends State<SplashView> {
-  late Timer _timer;
-
   @override
   void initState() {
-    _timer = Timer(const Duration(seconds: 2), () {
-      if (!mounted) return;
-      context.pushReplacement(OnboardingView.routeName);
-    });
     super.initState();
-  }
 
-  @override
-  void dispose() {
-    _timer.cancel();
-    super.dispose();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await Future.delayed(const Duration(seconds: 2));
+      if (!mounted) return;
+      context.go(OnboardingView.routeName);
+    });
   }
 
   @override

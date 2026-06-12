@@ -29,4 +29,21 @@ class AppStrings {
   static const String signUp = 'Sign up';
   static const String confirmPassword = 'Confirm password';
   static const String fullName = 'Full name';
+  static const String eventDetails = 'Event Details';
+  static const String going = 'Going';
+  static const String invite = 'Invite';
+  static const String internationalBandMusicConcert =
+      'International Band Music Concert';
+  static const String eventDate = '14 December, 2021';
+  static const String eventTime = 'Tuesday, 4:00PM - 9:00PM';
+  static const String eventLocation = 'Gala Convention Center';
+  static const String eventAddress = '36 Guild Street London, UK ';
+  static const String organizerName = 'Ashfak Sayem';
+  static const String organizerRole = 'Organizer';
+  static const String follow = 'Follow';
+  static const String aboutEvent = 'About Event';
+  static const String eventDescription =
+      'Enjoy your favorite dishe and a lovely your friends and family and have a great time. Food from local food trucks will be available for purchase.';
+  static const String readMore = 'Read More...';
+  static String buyTicket(String price) => 'Buy Ticket $price';
 }
