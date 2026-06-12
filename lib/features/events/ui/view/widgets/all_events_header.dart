@@ -11,11 +11,13 @@ class AllEventsHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const BackButton(),
-        Text(
-          AppStrings.events,
-          style: AppTextStyles.font18SemiBold.withColor(AppColors.black),
+        const BackButton(
+          style: ButtonStyle(
+            iconSize: WidgetStateProperty.fromMap({WidgetState.any: 26}),
+          ),
         ),
+
+        Text(AppStrings.events, style: AppTextStyles.font24Bold),
         const Spacer(),
         IconButton(
           onPressed: () {},

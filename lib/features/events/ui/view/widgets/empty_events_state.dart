@@ -26,13 +26,13 @@ class EmptyEventsState extends StatelessWidget {
           Text(
             title,
             textAlign: TextAlign.center,
-            style: AppTextStyles.font20SemiBold.withColor(AppColors.black),
+            style: AppTextStyles.font24Bold.withColor(AppColors.black),
           ),
           vGap(12),
           Text(
             AppStrings.loremIpsum,
             textAlign: TextAlign.center,
-            style: AppTextStyles.font14Regular.withColor(AppColors.darkGray),
+            style: AppTextStyles.font16Regular.withColor(AppColors.darkGray),
           ),
         ],
       ),

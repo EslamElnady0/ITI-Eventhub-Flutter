@@ -28,7 +28,7 @@ class _AllEventsViewState extends State<AllEventsView> {
         child: Column(
           children: [
             const AllEventsHeader(),
-            vGap(12),
+            vGap(16),
             EventsFilter(
               showUpcomingEvents: _showUpcomingEvents,
               onChanged: (showUpcomingEvents) {

@@ -20,7 +20,7 @@ class EventsFilter extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 12),
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: const Color(0xFFF5F5F5),
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(24),
       ),
       child: Row(
@@ -81,7 +81,7 @@ class _FilterItem extends StatelessWidget {
             child: Text(
               label,
               textAlign: TextAlign.center,
-              style: AppTextStyles.font12Medium.withColor(
+              style: AppTextStyles.font14Regular.withColor(
                 isSelected ? AppColors.primaryColor : AppColors.darkGray,
               ),
             ),
