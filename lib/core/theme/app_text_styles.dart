@@ -30,9 +30,13 @@ class AppTextStyles {
     fontSize: 20,
     fontWeight: FontWeightHelper.bold,
   );
-  static TextStyle bodyText = TextStyle(
-    fontSize: 16,
-    fontWeight: FontWeightHelper.regular,
+  static TextStyle font35Bold = TextStyle(
+    fontSize: 35,
+    fontWeight: FontWeightHelper.bold,
+  );
+  static TextStyle font12Medium = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeightHelper.medium,
   );
 }
 
