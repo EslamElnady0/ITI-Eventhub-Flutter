@@ -11,7 +11,7 @@ class EventDetailsBottom extends StatelessWidget {
       padding: EdgeInsets.only(
         left: 52,
         right: 52,
-        top: 62,
+        top: 72,
         bottom: MediaQuery.paddingOf(context).bottom + 8,
       ),
       decoration: BoxDecoration(
@@ -19,7 +19,7 @@ class EventDetailsBottom extends StatelessWidget {
           colors: [Colors.white, Colors.white.withValues(alpha: 0)],
           begin: Alignment.bottomCenter,
           end: Alignment.topCenter,
-          stops: const [0.55, 1.0],
+          stops: const [0.6, 1.0],
         ),
       ),
       child: CustomButton(

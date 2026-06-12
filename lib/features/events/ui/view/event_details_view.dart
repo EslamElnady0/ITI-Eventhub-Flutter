@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/widgets/custom_scaffold.dart';
 import 'widgets/about_event_section.dart';
-import 'widgets/event_bottom_bottom.dart';
+import 'widgets/event_details_bottom.dart';
 import 'widgets/event_details_header.dart';
 import 'widgets/event_info_section.dart';
 
