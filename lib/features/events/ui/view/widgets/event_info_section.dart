@@ -5,6 +5,7 @@ import '../../../../../core/assets/assets.dart';
 import '../../../../../core/helpers/spacing.dart';
 import '../../../../../core/theme/app_text_styles.dart';
 import 'event_info_item.dart';
+import 'event_orgnizer_item.dart';
 
 class EventInfoSection extends StatelessWidget {
   const EventInfoSection({super.key});
@@ -29,6 +30,12 @@ class EventInfoSection extends StatelessWidget {
           iconPath: Assets.assetsImagesLocationIcon,
           title: AppStrings.eventLocation,
           subTitle: AppStrings.eventAddress,
+        ),
+        vGap(24),
+        EventOrganizerItem(
+          iconPath: Assets.assetsImagesOrgnizerPlaceholder,
+          title: AppStrings.organizerName,
+          subTitle: AppStrings.organizerRole,
         ),
       ],
     );
