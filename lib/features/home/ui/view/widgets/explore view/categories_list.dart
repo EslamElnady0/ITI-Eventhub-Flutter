@@ -15,32 +15,32 @@ class CategoriesList extends StatelessWidget {
     CategoryModel(
       title: AppStrings.sports,
       icon: Assets.assetsImagesBallIcon,
-      color: Color(0xFFFF6B6B),
+      color: AppColors.sportsCategory,
     ),
     CategoryModel(
       title: AppStrings.music,
       icon: Assets.assetsImagesMusicIcon,
-      color: Color(0xFFF6A15A),
+      color: AppColors.musicCategory,
     ),
     CategoryModel(
       title: AppStrings.food,
       icon: Assets.assetsImagesFoodIcon,
-      color: Color(0xFF29D697),
+      color: AppColors.foodCategory,
     ),
     CategoryModel(
       title: AppStrings.sports,
       icon: Assets.assetsImagesBallIcon,
-      color: Color(0xFFFF6B6B),
+      color: AppColors.sportsCategory,
     ),
     CategoryModel(
       title: AppStrings.music,
       icon: Assets.assetsImagesMusicIcon,
-      color: Color(0xFFF6A15A),
+      color: AppColors.musicCategory,
     ),
     CategoryModel(
       title: AppStrings.food,
       icon: Assets.assetsImagesFoodIcon,
-      color: Color(0xFF29D697),
+      color: AppColors.foodCategory,
     ),
   ];
 

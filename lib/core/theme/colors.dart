@@ -19,6 +19,9 @@ class AppColors {
   static const Color black = Color(0xFF120D26);
   static const Color gray = Color(0xFFE4DFDF);
   static const Color darkGray = Color(0xFF747688);
+  static const Color sportsCategory = Color(0xFFFF6B6B);
+  static const Color musicCategory = Color(0xFFF6A15A);
+  static const Color foodCategory = Color(0xFF29D697);
 }
 
 extension AppColorsExtension on Color {

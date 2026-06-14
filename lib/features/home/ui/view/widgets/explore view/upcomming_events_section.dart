@@ -3,7 +3,7 @@ import '../../../../../../core/assets/app_strings.dart';
 import '../../../../../../core/helpers/spacing.dart';
 import '../../../../../../core/theme/app_text_styles.dart';
 import '../../../../../../core/theme/colors.dart';
-import 'event_card.dart';
+import 'event_card/event_card.dart';
 
 class UpComingEventsSection extends StatelessWidget {
   const UpComingEventsSection({super.key});
