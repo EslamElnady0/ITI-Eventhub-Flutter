@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/assets/app_strings.dart';
-import '../../../../core/theme/app_text_styles.dart';
-import '../../../../core/theme/colors.dart';
+import '../../core/assets/app_strings.dart';
+import '../../core/theme/app_text_styles.dart';
+import '../../core/theme/colors.dart';
 
 class MapView extends StatelessWidget {
   static const String routeName = '/map';

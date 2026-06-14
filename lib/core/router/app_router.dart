@@ -7,8 +7,8 @@ import '../../features/events/ui/view/all_events_view.dart';
 import '../../features/events/ui/view/event_details_view.dart';
 import '../../features/home/ui/view/explore_view.dart';
 import '../../features/home/ui/view/home_view.dart';
-import '../../features/home/ui/view/map_view.dart';
-import '../../features/home/ui/view/profile_view.dart';
+import '../../features/map/map_view.dart';
+import '../../features/profile/ui/view/profile_view.dart';
 import '../../features/onboarding/ui/view/onboarding_view.dart';
 import '../../features/splash/ui/splash_view.dart';
 
