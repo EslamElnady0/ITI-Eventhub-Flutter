@@ -5,6 +5,10 @@ import '../../features/auth/ui/view/login_view.dart';
 import '../../features/auth/ui/view/signup_view.dart';
 import '../../features/events/ui/view/all_events_view.dart';
 import '../../features/events/ui/view/event_details_view.dart';
+import '../../features/home/ui/view/explore_view.dart';
+import '../../features/home/ui/view/home_view.dart';
+import '../../features/home/ui/view/map_view.dart';
+import '../../features/home/ui/view/profile_view.dart';
 import '../../features/onboarding/ui/view/onboarding_view.dart';
 import '../../features/splash/ui/splash_view.dart';
 
@@ -54,19 +58,49 @@ class AppRouter {
         pageBuilder: (context, state) =>
             _buildPageWithTransition(context, state, const SignupView()),
       ),
-      GoRoute(
-        path: '/',
-        redirect: (context, state) => EventDetailsView.routeName,
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, navigationShell) {
+          return HomeView(navigationShell: navigationShell);
+        },
+        branches: [
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: ExploreView.routeName,
+                builder: (context, state) => const ExploreView(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AllEventsView.routeName,
+                builder: (context, state) => const AllEventsView(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: MapView.routeName,
+                builder: (context, state) => const MapView(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: ProfileView.routeName,
+                builder: (context, state) => const ProfileView(),
+              ),
+            ],
+          ),
+        ],
       ),
       GoRoute(
         path: EventDetailsView.routeName,
         pageBuilder: (context, state) =>
             _buildPageWithTransition(context, state, const EventDetailsView()),
-      ),
-      GoRoute(
-        path: AllEventsView.routeName,
-        pageBuilder: (context, state) =>
-            _buildPageWithTransition(context, state, const AllEventsView()),
       ),
     ],
   );

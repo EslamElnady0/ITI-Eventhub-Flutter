@@ -7,7 +7,7 @@ import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/theme/colors.dart';
 import '../../../../core/widgets/custom_button.dart';
 import '../../../../core/widgets/custom_scaffold.dart';
-import '../../../events/ui/view/event_details_view.dart';
+import '../../../home/ui/view/explore_view.dart';
 import 'signup_view.dart';
 import 'widgets/auth_footer.dart';
 import 'widgets/login_form.dart';
@@ -92,7 +92,7 @@ class _LoginViewState extends State<LoginView> {
                       label: AppStrings.signIn,
                       onPressed: () {
                         if (_formKey.currentState?.validate() ?? false) {
-                          context.go(EventDetailsView.routeName);
+                          context.go(ExploreView.routeName);
                         }
                       },
                     ),

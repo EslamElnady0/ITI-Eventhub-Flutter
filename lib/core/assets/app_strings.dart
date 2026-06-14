@@ -65,4 +65,7 @@ class AppStrings {
   static const String joMaloneLondon = "Jo Malone London’s Mo..";
   static const String guildStreetLondon = "36 Guild Street London, UK ";
   static const String nearbyYou = "Nearby You";
+  static const String explore = "Explore";
+  static const String map = "Map";
+  static const String profile = "Profile";
 }
