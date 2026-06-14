@@ -7,6 +7,7 @@ import 'categories_list.dart';
 import 'current_location_drop_down.dart';
 import 'notification_icon_button.dart';
 import 'search_bar_widget.dart';
+import '../home_drawer_scope.dart';
 
 class ExploreViewHeader extends StatelessWidget {
   const ExploreViewHeader({super.key});
@@ -36,7 +37,7 @@ class ExploreViewHeader extends StatelessWidget {
                   mainAxisAlignment: .spaceBetween,
                   children: [
                     IconButton(
-                      onPressed: () {},
+                      onPressed: HomeDrawerScope.of(context).openDrawer,
                       icon: SvgPicture.asset(
                         Assets.assetsImagesMenuIcon,
                         width: 20,

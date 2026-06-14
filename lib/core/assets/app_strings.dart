@@ -72,4 +72,7 @@ class AppStrings {
   static const String get20ForTicket = "Get \$20 for ticket";
   static const String eventDay = "10";
   static const String eventMonth = "JUNE";
+  static const String myProfile = "My Profile";
+  static const String calendar = "Calendar";
+  static const String signOut = "Sign Out";
 }
