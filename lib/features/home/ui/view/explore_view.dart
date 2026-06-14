@@ -28,7 +28,7 @@ class ExploreView extends StatelessWidget {
                   padding: const .symmetric(horizontal: 20),
                   child: CallToActionSection(),
                 ),
-                vGap(24),
+                vGap(16),
                 NearbyYouSection(),
                 vGap(24),
               ],
