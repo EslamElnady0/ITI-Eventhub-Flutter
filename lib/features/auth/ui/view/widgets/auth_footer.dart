@@ -25,7 +25,7 @@ class AuthFooter extends StatelessWidget {
         ),
         TextButton(
           style: TextButton.styleFrom(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            padding: const .symmetric(horizontal: 8, vertical: 4),
           ),
           onPressed: onPressed,
           child: Text(
