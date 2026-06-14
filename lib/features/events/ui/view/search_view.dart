@@ -5,6 +5,7 @@ import '../../../../core/assets/app_strings.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/theme/colors.dart';
+import '../../../../core/widgets/custom_scaffold.dart';
 import '../../../home/ui/view/widgets/explore view/search_bar_widget.dart';
 import '../../data/events_data.dart';
 import 'event_details_view.dart';
@@ -18,7 +19,7 @@ class SearchView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return CustomScaffold(
       appBar: AppBar(
         backgroundColor: AppColors.white,
         surfaceTintColor: AppColors.white,

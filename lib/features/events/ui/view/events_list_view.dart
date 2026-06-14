@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/helpers/spacing.dart';
+import '../../../../core/widgets/custom_scaffold.dart';
 import '../../data/events_data.dart';
 import 'event_details_view.dart';
 import 'search_view.dart';
@@ -15,7 +16,7 @@ class EventsListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return CustomScaffold(
       appBar: EventsListAppBar(
         onBack: context.pop,
         onSearch: () => context.push(SearchView.routeName),

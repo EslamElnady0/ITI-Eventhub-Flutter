@@ -23,11 +23,15 @@ class _AllEventsViewState extends State<AllEventsView> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
+      appBar: const AllEventsHeader(),
+      bottomNavigationBar: SafeArea(
+        minimum: const EdgeInsets.fromLTRB(60, 8, 60, 24),
+        child: CustomButton(label: AppStrings.exploreEvents, onPressed: () {}),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
-            const AllEventsHeader(),
             vGap(16),
             EventsFilter(
               showUpcomingEvents: _showUpcomingEvents,
@@ -40,17 +44,6 @@ class _AllEventsViewState extends State<AllEventsView> {
                 title: _showUpcomingEvents
                     ? AppStrings.noUpcomingEvent
                     : AppStrings.noPastEvent,
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                left: 40,
-                right: 40,
-                bottom: MediaQuery.paddingOf(context).bottom + 24,
-              ),
-              child: CustomButton(
-                label: AppStrings.exploreEvents,
-                onPressed: () {},
               ),
             ),
           ],
