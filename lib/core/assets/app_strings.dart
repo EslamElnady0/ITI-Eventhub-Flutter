@@ -53,4 +53,16 @@ class AppStrings {
   static const String noPastEvent = "No Past Event";
   static const String loremIpsum = "Lorem ipsum dolor sit amet, consectetur ";
   static const String exploreEvents = "Explore Events";
+  static const String currentLocation = "Current Location";
+  static const String newYorkUSA = "New Yourk, USA";
+  static const String search = "Search...";
+  static const String filters = "Filters";
+  static const String sports = "Sports";
+  static const String music = "Music";
+  static const String food = "Food";
+  static const String upcomingEvents = "Upcoming Events";
+  static const String seeAll = "See All";
+  static const String joMaloneLondon = "Jo Malone London’s Mo..";
+  static const String guildStreetLondon = "36 Guild Street London, UK ";
+  static const String nearbyYou = "Nearby You";
 }
