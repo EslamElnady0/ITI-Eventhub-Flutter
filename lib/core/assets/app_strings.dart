@@ -75,4 +75,23 @@ class AppStrings {
   static const String myProfile = "My Profile";
   static const String calendar = "Calendar";
   static const String signOut = "Sign Out";
+  static const String searchTitle = "Search";
+  static const String searchEventDate = "1ST MAY - SAT - 2:00 PM";
+  static const String virtualSmoothJazz = "A virtual evening of smooth jazz";
+  static const String mothersDay = "Jo malone london’s mother’s day";
+  static const String womensLeadership = "Women’s leadership conference";
+  static const String kidsSafety = "International kids safe parents night out";
+  static const String musicFestival = "International gala music festival";
+  static const String filter = "Filter";
+  static const String art = "Art";
+  static const String timeAndDate = "Time & Date";
+  static const String today = "Today";
+  static const String tomorrow = "Tomorrow";
+  static const String thisWeek = "This week";
+  static const String chooseFromCalendar = "Choose from calendar";
+  static const String location = "Location";
+  static const String selectPriceRange = "Select price range";
+  static const String priceRange = "\$20-\$120";
+  static const String reset = "RESET";
+  static const String apply = "APPLY";
 }

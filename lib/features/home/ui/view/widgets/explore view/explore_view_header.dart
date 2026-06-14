@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:iti_flutter_proj/core/assets/assets.dart';
 
 import '../../../../../../core/helpers/spacing.dart';
+import '../../../../../events/ui/view/search_view.dart';
+import '../../../../../events/ui/view/widgets/filter/event_filter_bottom_sheet.dart';
 import 'categories_list.dart';
 import 'current_location_drop_down.dart';
 import 'notification_icon_button.dart';
@@ -49,7 +52,11 @@ class ExploreViewHeader extends StatelessWidget {
                   ],
                 ),
                 vGap(20),
-                SearchBarWidget(),
+                SearchBarWidget(
+                  readOnly: true,
+                  onTap: () => context.push(SearchView.routeName),
+                  onFilterTap: () => EventFilterBottomSheet.show(context),
+                ),
               ],
             ),
           ),
