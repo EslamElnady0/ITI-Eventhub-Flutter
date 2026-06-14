@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import '../../features/auth/ui/view/login_view.dart';
 import '../../features/auth/ui/view/signup_view.dart';
 import '../../features/events/ui/view/all_events_view.dart';
+import '../../features/events/ui/view/event_details_view.dart';
 import '../../features/events/ui/view/events_list_view.dart';
 import '../../features/events/ui/view/search_view.dart';
 import '../../features/home/ui/view/explore_view.dart';
@@ -96,6 +97,11 @@ class AppRouter {
             ],
           ),
         ],
+      ),
+      GoRoute(
+        path: EventDetailsView.routeName,
+        pageBuilder: (context, state) =>
+            _buildPageWithTransition(context, state, const EventDetailsView()),
       ),
       GoRoute(
         path: SearchView.routeName,
