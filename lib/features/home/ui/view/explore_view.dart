@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../../../core/assets/app_strings.dart';
-import '../../../../core/theme/app_text_styles.dart';
-import '../../../../core/theme/colors.dart';
+import 'widgets/explore view/explore_view_header.dart';
 
 class ExploreView extends StatelessWidget {
   static const String routeName = '/explore';
@@ -11,11 +8,6 @@ class ExploreView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        AppStrings.explore,
-        style: AppTextStyles.font24Bold.withColor(AppColors.black),
-      ),
-    );
+    return Column(children: [ExploreViewHeader()]);
   }
 }

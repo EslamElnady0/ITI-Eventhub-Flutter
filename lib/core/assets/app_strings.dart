@@ -54,7 +54,7 @@ class AppStrings {
   static const String loremIpsum = "Lorem ipsum dolor sit amet, consectetur ";
   static const String exploreEvents = "Explore Events";
   static const String currentLocation = "Current Location";
-  static const String newYorkUSA = "New Yourk, USA";
+  static const String newYorkUSA = "New York, USA";
   static const String search = "Search...";
   static const String filters = "Filters";
   static const String sports = "Sports";

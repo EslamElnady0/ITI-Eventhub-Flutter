@@ -122,6 +122,10 @@ class Assets {
   /// assets/images/profile_icon.svg
   static const String assetsImagesProfileIcon = "assets/images/profile_icon.svg";
 
+  /// Assets for assetsImagesSearchIcon
+  /// assets/images/search_icon.svg
+  static const String assetsImagesSearchIcon = "assets/images/search_icon.svg";
+
   /// Assets for assetsImagesSecondOnboarding
   /// assets/images/second_onboarding.png
   static const String assetsImagesSecondOnboarding = "assets/images/second_onboarding.png";

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:iti_flutter_proj/core/widgets/custom_scaffold.dart';
 
 import 'widgets/home_bottom_nav_bar.dart';
 
@@ -10,7 +11,8 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return CustomScaffold(
+      ignoreTopSafeArea: true,
       body: navigationShell,
       bottomNavigationBar: HomeBottomNavBar(
         currentIndex: navigationShell.currentIndex,
