@@ -87,7 +87,7 @@ class _LoginViewState extends State<LoginView> {
                   ),
                   vGap(24),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                    padding: const .symmetric(horizontal: 32.0),
                     child: CustomButton(
                       label: AppStrings.signIn,
                       onPressed: () {
