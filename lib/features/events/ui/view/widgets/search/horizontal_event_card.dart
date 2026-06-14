@@ -19,14 +19,14 @@ class HorizontalEventCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: AppColors.white,
-      borderRadius: BorderRadius.circular(14),
+      borderRadius: .circular(14),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: .circular(14),
         child: Container(
-          padding: const EdgeInsets.all(8),
+          padding: const .all(8),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: .circular(14),
             boxShadow: [
               BoxShadow(
                 color: AppColors.black.withValues(alpha: 0.05),
@@ -38,7 +38,7 @@ class HorizontalEventCard extends StatelessWidget {
           child: Row(
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: .circular(10),
                 child: Image.asset(
                   event.image,
                   width: 74,
@@ -49,8 +49,8 @@ class HorizontalEventCard extends StatelessWidget {
               hGap(12),
               Expanded(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: .center,
+                  crossAxisAlignment: .start,
                   children: [
                     Text(
                       event.date,
@@ -62,7 +62,7 @@ class HorizontalEventCard extends StatelessWidget {
                     Text(
                       event.title,
                       maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+                      overflow: .ellipsis,
                       style: AppTextStyles.font15Medium.withColor(
                         AppColors.black,
                       ),
@@ -80,7 +80,7 @@ class HorizontalEventCard extends StatelessWidget {
                           child: Text(
                             event.location,
                             maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                            overflow: .ellipsis,
                             style: AppTextStyles.font12Medium
                                 .withColor(AppColors.darkGray)
                                 .withFontSize(10),
