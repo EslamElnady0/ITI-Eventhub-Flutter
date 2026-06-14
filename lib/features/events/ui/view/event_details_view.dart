@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/widgets/custom_scaffold.dart';
-import 'all_events_view.dart';
 import 'widgets/about_event_section.dart';
 import 'widgets/event_details_bottom.dart';
 import 'widgets/event_details_header.dart';
@@ -48,9 +45,7 @@ class EventDetailsView extends StatelessWidget {
             bottom: 0,
             left: 0,
             right: 0,
-            child: EventDetailsBottom(
-              onBuyTicket: () => context.push(AllEventsView.routeName),
-            ),
+            child: EventDetailsBottom(onBuyTicket: () {}),
           ),
         ],
       ),
