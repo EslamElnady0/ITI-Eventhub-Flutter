@@ -68,4 +68,6 @@ class AppStrings {
   static const String explore = "Explore";
   static const String map = "Map";
   static const String profile = "Profile";
+  static const String inviteYourFriends = "Invite your friends";
+  static const String get20ForTicket = "Get \$20 for ticket";
 }
