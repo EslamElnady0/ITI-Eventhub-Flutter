@@ -94,4 +94,17 @@ class AppStrings {
   static const String priceRange = "\$20-\$120";
   static const String reset = "RESET";
   static const String apply = "APPLY";
+  static const String eventDateMothersDay = "WED, APR 28 - 5:30 PM";
+  static const String eventDateJazz = "SAT, MAY 1 - 2:00 PM";
+  static const String eventDateLeadership = "SAT, APR 24 - 1:30 PM";
+  static const String eventDateKidsSafety = "FRI, APR 23 - 6:00 PM";
+  static const String eventDateCollectivity = "MON, JUN 21 - 10:00 PM";
+  static const String eventDateFestival = "SUN, APR 25 - 10:15 AM";
+  static const String collectivityMusic =
+      "Collectivity Plays the Music of Jimi";
+  static const String locationGallery = "Radius Gallery - Santa Cruz, CA";
+  static const String locationOakland = "Lot 13 - Oakland, CA";
+  static const String locationSanFrancisco = "53 Bush St - San Francisco, CA";
+  static const String locationLongboard = "Longboard Margarita Bar";
+  static const String moreOptions = "More options";
 }

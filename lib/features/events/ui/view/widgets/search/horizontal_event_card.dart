@@ -67,6 +67,27 @@ class HorizontalEventCard extends StatelessWidget {
                         AppColors.black,
                       ),
                     ),
+                    vGap(5),
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.location_on,
+                          color: AppColors.darkGray,
+                          size: 13,
+                        ),
+                        hGap(3),
+                        Expanded(
+                          child: Text(
+                            event.location,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTextStyles.font12Medium
+                                .withColor(AppColors.darkGray)
+                                .withFontSize(10),
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),

@@ -5,6 +5,7 @@ import '../../../../../../core/helpers/spacing.dart';
 import '../../../../../../core/theme/app_text_styles.dart';
 import '../../../../../../core/theme/colors.dart';
 import '../../../../../events/ui/view/event_details_view.dart';
+import '../../../../../events/ui/view/events_list_view.dart';
 import 'event_card/event_card.dart';
 
 class NearbyYouSection extends StatelessWidget {
@@ -22,7 +23,7 @@ class NearbyYouSection extends StatelessWidget {
               Text(AppStrings.nearbyYou, style: AppTextStyles.font20Bold),
               IconButton(
                 padding: .zero,
-                onPressed: () {},
+                onPressed: () => context.push(EventsListView.routeName),
                 icon: Row(
                   children: [
                     Text(
