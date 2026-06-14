@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../../../core/assets/app_strings.dart';
 import '../../../../../../core/helpers/spacing.dart';
 import '../../../../../../core/theme/app_text_styles.dart';
 import '../../../../../../core/theme/colors.dart';
+import '../../../../../events/ui/view/event_details_view.dart';
 import 'event_card/event_card.dart';
 
 class UpComingEventsSection extends StatelessWidget {
@@ -50,7 +52,11 @@ class UpComingEventsSection extends StatelessWidget {
             itemCount: 5,
             separatorBuilder: (context, index) => hGap(12),
             itemBuilder: (context, index) {
-              return EventCard();
+              return EventCard(
+                onTap: () {
+                  context.push(EventDetailsView.routeName);
+                },
+              );
             },
           ),
         ),

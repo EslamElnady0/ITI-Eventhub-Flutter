@@ -39,7 +39,7 @@ class AppRouter {
   static final router = GoRouter(
     routes: [
       GoRoute(
-        path: '/',
+        path: '/sss',
         pageBuilder: (context, state) =>
             _buildPageWithTransition(context, state, const SplashView()),
       ),
@@ -66,7 +66,7 @@ class AppRouter {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: ExploreView.routeName,
+                path: "/",
                 builder: (context, state) => const ExploreView(),
               ),
             ],
