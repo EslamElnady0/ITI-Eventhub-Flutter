@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../../../core/assets/app_strings.dart';
 import '../../../../../../../core/theme/app_text_styles.dart';
 import '../../../../../../../core/theme/colors.dart';
 
 class EventDateBadge extends StatelessWidget {
-  const EventDateBadge({super.key});
+  const EventDateBadge({super.key, required this.day, required this.month});
+
+  final String day;
+  final String month;
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +21,13 @@ class EventDateBadge extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            AppStrings.eventDay,
+            day,
             style: AppTextStyles.font18SemiBold.withColor(
               AppColors.sportsCategory,
             ),
           ),
           Text(
-            AppStrings.eventMonth,
+            month,
             style: AppTextStyles.font12Medium.withColor(
               AppColors.sportsCategory,
             ),

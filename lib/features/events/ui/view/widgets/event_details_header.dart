@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../core/assets/app_strings.dart';
-import '../../../../../core/assets/assets.dart';
 import '../../../../../core/theme/app_text_styles.dart';
 import '../../../../../core/theme/colors.dart';
+import '../../../../../core/widgets/app_network_image.dart';
+import '../../../data/entities/event_entity.dart';
 import 'floating_engaged_people_view.dart';
 
 class EventDetailsHeader extends StatelessWidget {
-  const EventDetailsHeader({super.key});
+  const EventDetailsHeader({super.key, required this.event});
+
+  final EventEntity event;
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +23,7 @@ class EventDetailsHeader extends StatelessWidget {
         minHeaderExtent: topPadding + 68,
         maxHeaderExtent: (screenHeight * 0.26).clamp(280.0, 360.0) + 48,
         topPadding: topPadding,
+        event: event,
       ),
     );
   }
@@ -33,11 +37,13 @@ class _EventDetailsHeaderDelegate extends SliverPersistentHeaderDelegate {
     required this.minHeaderExtent,
     required this.maxHeaderExtent,
     required this.topPadding,
+    required this.event,
   });
 
   final double minHeaderExtent;
   final double maxHeaderExtent;
   final double topPadding;
+  final EventEntity event;
 
   @override
   double get minExtent => minHeaderExtent;
@@ -72,10 +78,9 @@ class _EventDetailsHeaderDelegate extends SliverPersistentHeaderDelegate {
               opacity: 1 - progress,
               child: Transform.scale(
                 scale: 1 + (progress * 0.08),
-                child: Image.asset(
-                  Assets.assetsImagesEventImage,
+                child: AppNetworkImage(
+                  imageUrl: event.imageUrl,
                   fit: BoxFit.cover,
-                  alignment: Alignment.center,
                 ),
               ),
             ),
@@ -137,7 +142,7 @@ class _EventDetailsHeaderDelegate extends SliverPersistentHeaderDelegate {
             ignoring: compactOpacity == 0,
             child: Opacity(
               opacity: compactOpacity,
-              child: const _CompactActionBar(),
+              child: _CompactActionBar(event: event),
             ),
           ),
         ),
@@ -154,7 +159,8 @@ class _EventDetailsHeaderDelegate extends SliverPersistentHeaderDelegate {
   bool shouldRebuild(covariant _EventDetailsHeaderDelegate oldDelegate) {
     return minHeaderExtent != oldDelegate.minHeaderExtent ||
         maxHeaderExtent != oldDelegate.maxHeaderExtent ||
-        topPadding != oldDelegate.topPadding;
+        topPadding != oldDelegate.topPadding ||
+        event != oldDelegate.event;
   }
 }
 
@@ -184,7 +190,9 @@ class _ExpandedActionBar extends StatelessWidget {
 }
 
 class _CompactActionBar extends StatelessWidget {
-  const _CompactActionBar();
+  const _CompactActionBar({required this.event});
+
+  final EventEntity event;
 
   @override
   Widget build(BuildContext context) {
@@ -192,8 +200,8 @@ class _CompactActionBar extends StatelessWidget {
       children: [
         const BackButton(),
         ClipOval(
-          child: Image.asset(
-            Assets.assetsImagesEventImage,
+          child: AppNetworkImage(
+            imageUrl: event.imageUrl,
             width: 42,
             height: 42,
             fit: BoxFit.cover,
@@ -202,7 +210,7 @@ class _CompactActionBar extends StatelessWidget {
         const SizedBox(width: 12),
         Expanded(
           child: Text(
-            AppStrings.internationalBandMusicConcert,
+            event.title,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.font16Medium.copyWith(

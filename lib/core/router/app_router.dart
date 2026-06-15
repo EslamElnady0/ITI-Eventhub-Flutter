@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import '../../features/events/data/entities/event_query.dart';
+import '../../features/events/ui/cubit/event_details_cubit.dart';
+import '../../features/events/ui/cubit/events_list_cubit.dart';
+import '../../features/events/ui/cubit/search_cubit.dart';
 import '../../features/auth/ui/view/login_view.dart';
 import '../../features/auth/ui/view/signup_view.dart';
 import '../../features/events/ui/view/all_events_view.dart';
@@ -12,6 +17,8 @@ import '../../features/map/map_view.dart';
 import '../../features/profile/ui/view/profile_view.dart';
 import '../../features/onboarding/ui/view/onboarding_view.dart';
 import '../../features/splash/ui/splash_view.dart';
+import '../../features/home/ui/cubit/home_cubit.dart';
+import '../di/service_locator.dart';
 
 Page<void> _buildPageWithTransition(
   BuildContext context,
@@ -68,7 +75,10 @@ class AppRouter {
             routes: [
               GoRoute(
                 path: ExploreView.routeName,
-                builder: (context, state) => const ExploreView(),
+                builder: (context, state) => BlocProvider(
+                  create: (_) => getIt<HomeCubit>()..load(),
+                  child: const ExploreView(),
+                ),
               ),
             ],
           ),
@@ -76,7 +86,12 @@ class AppRouter {
             routes: [
               GoRoute(
                 path: AllEventsView.routeName,
-                builder: (context, state) => const AllEventsView(),
+                builder: (context, state) => BlocProvider(
+                  create: (_) =>
+                      getIt<EventsListCubit>(param1: EventListMode.upcoming)
+                        ..load(),
+                  child: const AllEventsView(),
+                ),
               ),
             ],
           ),
@@ -99,19 +114,46 @@ class AppRouter {
         ],
       ),
       GoRoute(
-        path: EventDetailsView.routeName,
-        pageBuilder: (context, state) =>
-            _buildPageWithTransition(context, state, const EventDetailsView()),
+        path: '${EventDetailsView.routeName}/:eventId',
+        pageBuilder: (context, state) {
+          final eventId = state.pathParameters['eventId'] ?? '';
+          return _buildPageWithTransition(
+            context,
+            state,
+            BlocProvider(
+              create: (_) => getIt<EventDetailsCubit>()..load(eventId),
+              child: EventDetailsView(eventId: eventId),
+            ),
+          );
+        },
       ),
       GoRoute(
         path: SearchView.routeName,
-        pageBuilder: (context, state) =>
-            _buildPageWithTransition(context, state, const SearchView()),
+        pageBuilder: (context, state) => _buildPageWithTransition(
+          context,
+          state,
+          BlocProvider(
+            create: (_) => getIt<SearchCubit>()..loadInitial(),
+            child: const SearchView(),
+          ),
+        ),
       ),
       GoRoute(
         path: EventsListView.routeName,
-        pageBuilder: (context, state) =>
-            _buildPageWithTransition(context, state, const EventsListView()),
+        pageBuilder: (context, state) {
+          final rawMode = state.uri.queryParameters['mode'];
+          final mode = rawMode == EventListMode.nearby.name
+              ? EventListMode.nearby
+              : EventListMode.upcoming;
+          return _buildPageWithTransition(
+            context,
+            state,
+            BlocProvider(
+              create: (_) => getIt<EventsListCubit>(param1: mode)..load(),
+              child: EventsListView(mode: mode),
+            ),
+          );
+        },
       ),
     ],
   );

@@ -30,16 +30,18 @@ class EventInfoItem extends StatelessWidget {
           child: SvgPicture.asset(iconPath),
         ),
         hGap(14),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(title, style: AppTextStyles.font16Medium),
-            vGap(4),
-            Text(
-              subTitle,
-              style: AppTextStyles.font12Medium.withColor(AppColors.darkGray),
-            ),
-          ],
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(title, style: AppTextStyles.font16Medium),
+              vGap(4),
+              Text(
+                subTitle,
+                style: AppTextStyles.font12Medium.withColor(AppColors.darkGray),
+              ),
+            ],
+          ),
         ),
       ],
     );

@@ -8,11 +8,15 @@ import '../../../../../../core/theme/colors.dart';
 class FilterDateSection extends StatelessWidget {
   final int selectedIndex;
   final ValueChanged<int> onSelected;
+  final ValueChanged<DateTime> onCustomDateSelected;
+  final DateTime? customDate;
 
   const FilterDateSection({
     super.key,
     required this.selectedIndex,
     required this.onSelected,
+    required this.onCustomDateSelected,
+    required this.customDate,
   });
 
   static const List<String> dateOptions = [
@@ -52,13 +56,26 @@ class FilterDateSection extends StatelessWidget {
         ),
         vGap(8),
         OutlinedButton.icon(
-          onPressed: () {},
+          onPressed: () async {
+            final now = DateTime.now();
+            final date = await showDatePicker(
+              context: context,
+              initialDate: customDate ?? now,
+              firstDate: now,
+              lastDate: DateTime(now.year + 2),
+            );
+            if (date != null) onCustomDateSelected(date);
+          },
           icon: const Icon(
             Icons.calendar_month_outlined,
             color: AppColors.primaryColor,
             size: 18,
           ),
-          label: const Text(AppStrings.chooseFromCalendar),
+          label: Text(
+            customDate == null
+                ? AppStrings.chooseFromCalendar
+                : '${customDate!.day}/${customDate!.month}/${customDate!.year}',
+          ),
           style: OutlinedButton.styleFrom(
             foregroundColor: AppColors.darkGray,
             side: const BorderSide(color: AppColors.gray),

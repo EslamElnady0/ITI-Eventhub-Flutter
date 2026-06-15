@@ -1,36 +1,39 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../core/helpers/spacing.dart';
-import '../../../../events/data/events_data.dart';
-import '../../../../events/ui/models/event_model.dart';
+import '../../../../events/data/entities/event_entity.dart';
 import '../../../../events/ui/view/widgets/search/horizontal_event_card.dart';
 
 class ProfileFavsTab extends StatelessWidget {
-  final List<EventModel> events;
-  final ValueChanged<EventModel> onEventTap;
-
   const ProfileFavsTab({
     super.key,
     required this.events,
     required this.onEventTap,
   });
 
+  final List<EventEntity> events;
+  final ValueChanged<EventEntity> onEventTap;
+
+  static const List<EventEntity> defaultEvents = [];
+
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
+    if (events.isEmpty) {
+      return const Center(child: Text('No saved events yet.'));
+    }
+
+    return ListView.builder(
+      padding: const EdgeInsets.all(16),
       itemCount: events.length,
-      separatorBuilder: (context, index) => vGap(12),
       itemBuilder: (context, index) {
         final event = events[index];
-        return HorizontalEventCard(
-          event: event,
-          onTap: () => onEventTap(event),
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 12),
+          child: HorizontalEventCard(
+            event: event,
+            onTap: () => onEventTap(event),
+          ),
         );
       },
     );
   }
-
-  static List<EventModel> get defaultEvents =>
-      EventsData.searchEvents.toList(growable: false);
 }

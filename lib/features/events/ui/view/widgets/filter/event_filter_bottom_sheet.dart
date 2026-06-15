@@ -9,12 +9,29 @@ import 'filter_categories_list.dart';
 import 'filter_date_section.dart';
 import 'filter_location_tile.dart';
 import 'filter_price_range_section.dart';
+import '../../../../data/entities/event_query.dart';
+
+class EventFilterSelection {
+  const EventFilterSelection({
+    required this.classificationName,
+    required this.datePreset,
+    required this.customDate,
+    required this.minPrice,
+    required this.maxPrice,
+  });
+
+  final String classificationName;
+  final EventDatePreset datePreset;
+  final DateTime? customDate;
+  final double? minPrice;
+  final double? maxPrice;
+}
 
 class EventFilterBottomSheet extends StatefulWidget {
   const EventFilterBottomSheet({super.key});
 
-  static Future<void> show(BuildContext context) {
-    return showModalBottomSheet<void>(
+  static Future<EventFilterSelection?> show(BuildContext context) {
+    return showModalBottomSheet<EventFilterSelection>(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
@@ -27,9 +44,11 @@ class EventFilterBottomSheet extends StatefulWidget {
 }
 
 class EventFilterBottomSheetState extends State<EventFilterBottomSheet> {
-  int selectedCategoryIndex = 0;
-  int selectedDateIndex = 1;
-  RangeValues priceValues = const RangeValues(20, 120);
+  int selectedCategoryIndex = -1;
+  int selectedDateIndex = -1;
+  RangeValues priceValues = const RangeValues(0, 150);
+  DateTime? customDate;
+  bool priceFilterEnabled = false;
 
   @override
   Widget build(BuildContext context) {
@@ -68,8 +87,18 @@ class EventFilterBottomSheetState extends State<EventFilterBottomSheet> {
             vGap(16),
             FilterDateSection(
               selectedIndex: selectedDateIndex,
+              customDate: customDate,
               onSelected: (index) {
-                setState(() => selectedDateIndex = index);
+                setState(() {
+                  selectedDateIndex = index;
+                  customDate = null;
+                });
+              },
+              onCustomDateSelected: (date) {
+                setState(() {
+                  customDate = date;
+                  selectedDateIndex = -1;
+                });
               },
             ),
             vGap(20),
@@ -78,13 +107,25 @@ class EventFilterBottomSheetState extends State<EventFilterBottomSheet> {
             FilterPriceRangeSection(
               values: priceValues,
               onChanged: (values) {
-                setState(() => priceValues = values);
+                setState(() {
+                  priceValues = values;
+                  priceFilterEnabled = true;
+                });
               },
             ),
             vGap(24),
             FilterActionButtons(
               onReset: resetFilters,
-              onApply: () => Navigator.pop(context),
+              onApply: () => Navigator.pop(
+                context,
+                EventFilterSelection(
+                  classificationName: _classificationName,
+                  datePreset: _datePreset,
+                  customDate: customDate,
+                  minPrice: priceFilterEnabled ? priceValues.start : null,
+                  maxPrice: priceFilterEnabled ? priceValues.end : null,
+                ),
+              ),
             ),
           ],
         ),
@@ -94,9 +135,33 @@ class EventFilterBottomSheetState extends State<EventFilterBottomSheet> {
 
   void resetFilters() {
     setState(() {
-      selectedCategoryIndex = 0;
-      selectedDateIndex = 1;
-      priceValues = const RangeValues(20, 120);
+      selectedCategoryIndex = -1;
+      selectedDateIndex = -1;
+      priceValues = const RangeValues(0, 150);
+      customDate = null;
+      priceFilterEnabled = false;
     });
+  }
+
+  String get _classificationName {
+    const values = ['sports', 'music', 'Arts & Theatre', 'Food & Drink'];
+    if (selectedCategoryIndex < 0 || selectedCategoryIndex >= values.length) {
+      return '';
+    }
+    return values[selectedCategoryIndex];
+  }
+
+  EventDatePreset get _datePreset {
+    if (customDate != null) return EventDatePreset.custom;
+    switch (selectedDateIndex) {
+      case 0:
+        return EventDatePreset.today;
+      case 1:
+        return EventDatePreset.tomorrow;
+      case 2:
+        return EventDatePreset.thisWeek;
+      default:
+        return EventDatePreset.any;
+    }
   }
 }

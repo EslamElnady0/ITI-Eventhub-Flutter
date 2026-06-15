@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../../../core/assets/app_strings.dart';
 import '../../../../../../../core/helpers/spacing.dart';
 import '../../../../../../../core/theme/app_text_styles.dart';
 import '../../../../../../../core/theme/colors.dart';
 
 class EventLocationRow extends StatelessWidget {
-  const EventLocationRow({super.key});
+  const EventLocationRow({super.key, required this.location});
+
+  final String location;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class EventLocationRow extends StatelessWidget {
         hGap(5),
         Expanded(
           child: Text(
-            AppStrings.guildStreetLondon,
+            location,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.font14Regular.withColor(AppColors.darkGray),

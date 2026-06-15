@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_single_quotes
 class Assets {
   Assets._();
-  
+
   /// Assets for assetsImagesAuthLogo
   /// assets/images/auth_logo.png
   static const String assetsImagesAuthLogo = "assets/images/auth_logo.png";
@@ -24,11 +24,13 @@ class Assets {
 
   /// Assets for assetsImagesBookmarkIcon
   /// assets/images/bookmark_icon.svg
-  static const String assetsImagesBookmarkIcon = "assets/images/bookmark_icon.svg";
+  static const String assetsImagesBookmarkIcon =
+      "assets/images/bookmark_icon.svg";
 
   /// Assets for assetsImagesCalendarBottomNavIcon
   /// assets/images/calendar_bottom_nav_icon.svg
-  static const String assetsImagesCalendarBottomNavIcon = "assets/images/calendar_bottom_nav_icon.svg";
+  static const String assetsImagesCalendarBottomNavIcon =
+      "assets/images/calendar_bottom_nav_icon.svg";
 
   /// Assets for assetsImagesCalender
   /// assets/images/calender.png
@@ -36,11 +38,17 @@ class Assets {
 
   /// Assets for assetsImagesCalenderIcon
   /// assets/images/calender_icon.svg
-  static const String assetsImagesCalenderIcon = "assets/images/calender_icon.svg";
+  static const String assetsImagesCalenderIcon =
+      "assets/images/calender_icon.svg";
 
   /// Assets for assetsImagesCompass
   /// assets/images/compass.svg
   static const String assetsImagesCompass = "assets/images/compass.svg";
+
+  /// Assets for assetsImagesDefaultCategoryIcon
+  /// assets/images/default_category_icon.svg
+  static const String assetsImagesDefaultCategoryIcon =
+      "assets/images/default_category_icon.svg";
 
   /// Assets for assetsImagesEvent1
   /// assets/images/event1.png
@@ -56,15 +64,18 @@ class Assets {
 
   /// Assets for assetsImagesFacebookIcon
   /// assets/images/facebook_icon.svg
-  static const String assetsImagesFacebookIcon = "assets/images/facebook_icon.svg";
+  static const String assetsImagesFacebookIcon =
+      "assets/images/facebook_icon.svg";
 
   /// Assets for assetsImagesFilterCircleIcon
   /// assets/images/filter_circle_icon.svg
-  static const String assetsImagesFilterCircleIcon = "assets/images/filter_circle_icon.svg";
+  static const String assetsImagesFilterCircleIcon =
+      "assets/images/filter_circle_icon.svg";
 
   /// Assets for assetsImagesFirstOnboarding
   /// assets/images/first_onboarding.png
-  static const String assetsImagesFirstOnboarding = "assets/images/first_onboarding.png";
+  static const String assetsImagesFirstOnboarding =
+      "assets/images/first_onboarding.png";
 
   /// Assets for assetsImagesFoodIcon
   /// assets/images/food_icon.svg
@@ -76,15 +87,18 @@ class Assets {
 
   /// Assets for assetsImagesHomeHeaderBg
   /// assets/images/home_header_bg.png
-  static const String assetsImagesHomeHeaderBg = "assets/images/home_header_bg.png";
+  static const String assetsImagesHomeHeaderBg =
+      "assets/images/home_header_bg.png";
 
   /// Assets for assetsImagesLocationCottomNavIcon
   /// assets/images/location_cottom_nav_icon.svg
-  static const String assetsImagesLocationCottomNavIcon = "assets/images/location_cottom_nav_icon.svg";
+  static const String assetsImagesLocationCottomNavIcon =
+      "assets/images/location_cottom_nav_icon.svg";
 
   /// Assets for assetsImagesLocationIcon
   /// assets/images/location_icon.svg
-  static const String assetsImagesLocationIcon = "assets/images/location_icon.svg";
+  static const String assetsImagesLocationIcon =
+      "assets/images/location_icon.svg";
 
   /// Assets for assetsImagesLogo
   /// assets/images/logo.png
@@ -108,7 +122,8 @@ class Assets {
 
   /// Assets for assetsImagesOrgnizerPlaceholder
   /// assets/images/orgnizer_placeholder.png
-  static const String assetsImagesOrgnizerPlaceholder = "assets/images/orgnizer_placeholder.png";
+  static const String assetsImagesOrgnizerPlaceholder =
+      "assets/images/orgnizer_placeholder.png";
 
   /// Assets for assetsImagesPassword
   /// assets/images/password.svg
@@ -116,11 +131,13 @@ class Assets {
 
   /// Assets for assetsImagesProfileBottomNavIcon
   /// assets/images/profile_bottom_nav_icon.svg
-  static const String assetsImagesProfileBottomNavIcon = "assets/images/profile_bottom_nav_icon.svg";
+  static const String assetsImagesProfileBottomNavIcon =
+      "assets/images/profile_bottom_nav_icon.svg";
 
   /// Assets for assetsImagesProfileIcon
   /// assets/images/profile_icon.svg
-  static const String assetsImagesProfileIcon = "assets/images/profile_icon.svg";
+  static const String assetsImagesProfileIcon =
+      "assets/images/profile_icon.svg";
 
   /// Assets for assetsImagesSearchIcon
   /// assets/images/search_icon.svg
@@ -128,14 +145,16 @@ class Assets {
 
   /// Assets for assetsImagesSecondOnboarding
   /// assets/images/second_onboarding.png
-  static const String assetsImagesSecondOnboarding = "assets/images/second_onboarding.png";
+  static const String assetsImagesSecondOnboarding =
+      "assets/images/second_onboarding.png";
 
   /// Assets for assetsImagesThirdOnboarding
   /// assets/images/third_onboarding.png
-  static const String assetsImagesThirdOnboarding = "assets/images/third_onboarding.png";
+  static const String assetsImagesThirdOnboarding =
+      "assets/images/third_onboarding.png";
 
   /// Assets for assetsImagesWomanAvatar
   /// assets/images/woman_avatar.png
-  static const String assetsImagesWomanAvatar = "assets/images/woman_avatar.png";
+  static const String assetsImagesWomanAvatar =
+      "assets/images/woman_avatar.png";
 }
-

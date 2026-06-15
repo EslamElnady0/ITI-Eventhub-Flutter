@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import '../../../../../../core/helpers/spacing.dart';
 import '../../../../../../core/theme/app_text_styles.dart';
 import '../../../../../../core/theme/colors.dart';
-import '../../../models/event_model.dart';
+import '../../../../../../core/widgets/app_network_image.dart';
+import '../../../../data/entities/event_entity.dart';
 
 class HorizontalEventCard extends StatelessWidget {
-  final EventModel event;
+  final EventEntity event;
   final VoidCallback onTap;
 
   const HorizontalEventCard({
@@ -39,8 +40,8 @@ class HorizontalEventCard extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: .circular(10),
-                child: Image.asset(
-                  event.image,
+                child: AppNetworkImage(
+                  imageUrl: event.imageUrl,
                   width: 74,
                   height: 74,
                   fit: BoxFit.cover,
@@ -53,7 +54,7 @@ class HorizontalEventCard extends StatelessWidget {
                   crossAxisAlignment: .start,
                   children: [
                     Text(
-                      event.date,
+                      '${event.dateLabel} - ${event.timeLabel}',
                       style: AppTextStyles.font12Medium
                           .withColor(AppColors.primaryColor)
                           .withFontSize(10),
@@ -78,7 +79,7 @@ class HorizontalEventCard extends StatelessWidget {
                         hGap(3),
                         Expanded(
                           child: Text(
-                            event.location,
+                            event.locationLabel,
                             maxLines: 1,
                             overflow: .ellipsis,
                             style: AppTextStyles.font12Medium

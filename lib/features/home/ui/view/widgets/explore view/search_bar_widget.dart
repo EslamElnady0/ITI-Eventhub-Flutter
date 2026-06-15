@@ -16,6 +16,8 @@ class SearchBarWidget extends StatelessWidget {
   final bool readOnly;
   final VoidCallback? onTap;
   final VoidCallback? onFilterTap;
+  final ValueChanged<String>? onChanged;
+  final TextEditingController? controller;
 
   const SearchBarWidget({
     super.key,
@@ -27,6 +29,8 @@ class SearchBarWidget extends StatelessWidget {
     this.readOnly = false,
     this.onTap,
     this.onFilterTap,
+    this.onChanged,
+    this.controller,
   });
 
   @override
@@ -48,8 +52,10 @@ class SearchBarWidget extends StatelessWidget {
         hGap(12),
         Expanded(
           child: TextField(
+            controller: controller,
             readOnly: readOnly,
             onTap: onTap,
+            onChanged: onChanged,
             style: AppTextStyles.font16Regular.withColor(foregroundColor),
             decoration: InputDecoration(
               hintText: AppStrings.search,

@@ -11,9 +11,12 @@ import 'current_location_drop_down.dart';
 import 'notification_icon_button.dart';
 import 'search_bar_widget.dart';
 import '../home_drawer_scope.dart';
+import '../../../../data/entities/home_category_entity.dart';
 
 class ExploreViewHeader extends StatelessWidget {
-  const ExploreViewHeader({super.key});
+  const ExploreViewHeader({super.key, required this.categories});
+
+  final List<HomeCategoryEntity> categories;
 
   @override
   Widget build(BuildContext context) {
@@ -60,11 +63,11 @@ class ExploreViewHeader extends StatelessWidget {
               ],
             ),
           ),
-          const Positioned(
+          Positioned(
             left: 0,
             right: 0,
             bottom: 0,
-            child: CategoriesList(),
+            child: CategoriesList(categories: categories),
           ),
         ],
       ),

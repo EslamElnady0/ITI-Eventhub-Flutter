@@ -7,9 +7,13 @@ import '../../../../../../core/theme/colors.dart';
 import '../../../../../events/ui/view/event_details_view.dart';
 import '../../../../../events/ui/view/events_list_view.dart';
 import 'event_card/event_card.dart';
+import '../../../../data/entities/home_event_entity.dart';
+import '../../../../../events/data/entities/event_query.dart';
 
 class NearbyYouSection extends StatelessWidget {
-  const NearbyYouSection({super.key});
+  const NearbyYouSection({super.key, required this.events});
+
+  final List<HomeEventEntity> events;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +27,9 @@ class NearbyYouSection extends StatelessWidget {
               Text(AppStrings.nearbyYou, style: AppTextStyles.font20Bold),
               IconButton(
                 padding: .zero,
-                onPressed: () => context.push(EventsListView.routeName),
+                onPressed: () => context.push(
+                  '${EventsListView.routeName}?mode=${EventListMode.nearby.name}',
+                ),
                 icon: Row(
                   children: [
                     Text(
@@ -50,12 +56,15 @@ class NearbyYouSection extends StatelessWidget {
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             padding: const .symmetric(horizontal: 20),
-            itemCount: 5,
+            itemCount: events.length,
             separatorBuilder: (context, index) => hGap(12),
             itemBuilder: (context, index) {
               return EventCard(
+                event: events[index],
                 onTap: () {
-                  context.push(EventDetailsView.routeName);
+                  context.push(
+                    '${EventDetailsView.routeName}/${events[index].id}',
+                  );
                 },
               );
             },

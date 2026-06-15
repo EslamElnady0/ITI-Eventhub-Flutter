@@ -32,7 +32,7 @@ class ProfileView extends StatelessWidget {
                   ProfileFavsTab(
                     events: ProfileFavsTab.defaultEvents,
                     onEventTap: (event) {
-                      context.push(EventDetailsView.routeName);
+                      context.push('${EventDetailsView.routeName}/${event.id}');
                     },
                   ),
                 ],
