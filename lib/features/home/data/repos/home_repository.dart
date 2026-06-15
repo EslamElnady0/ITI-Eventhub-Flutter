@@ -2,6 +2,7 @@ import '../../../../core/errors/app_failure.dart';
 import '../data_sources/home_remote_data_source.dart';
 import '../entities/home_category_entity.dart';
 import '../entities/home_event_entity.dart';
+import '../models/home_events_query_params.dart';
 
 class HomeData {
   const HomeData({
@@ -28,13 +29,14 @@ class HomeRepositoryImpl implements HomeRepository {
   Future<HomeData> getHomeData() async {
     try {
       final classifications = await _remoteDataSource.getClassifications();
-      final upcomingEventDtos = await _remoteDataSource.getUpcomingEvents(
-        city: 'New York',
-        startDateTime: DateTime.now(),
+      final upcomingEventDtos = await _remoteDataSource.getEvents(
+        UpcomingEventsQueryParams(
+          city: 'New York',
+          startDateTime: DateTime.now(),
+        ),
       );
-      final nearbyEventDtos = await _remoteDataSource.getNearbyEvents(
-        latitude: 40.7484,
-        longitude: -73.9857,
+      final nearbyEventDtos = await _remoteDataSource.getEvents(
+        const NearbyEventsQueryParams(latitude: 40.7484, longitude: -73.9857),
       );
 
       final categories = classifications

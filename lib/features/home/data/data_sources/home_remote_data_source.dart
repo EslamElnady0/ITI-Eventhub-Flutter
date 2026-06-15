@@ -1,23 +1,15 @@
 import 'package:dio/dio.dart';
 
 import '../../../../core/helpers/json_extensions.dart';
-import '../../../../core/networking/ticketmaster_date_time.dart';
 import '../../../../core/utils/isolate_parser.dart';
 import '../models/home_classification_dto.dart';
 import '../models/home_event_dto.dart';
+import '../models/home_events_query_params.dart';
 
 abstract class HomeRemoteDataSource {
   Future<List<HomeClassificationDto>> getClassifications();
 
-  Future<List<HomeEventDto>> getUpcomingEvents({
-    required String city,
-    required DateTime startDateTime,
-  });
-
-  Future<List<HomeEventDto>> getNearbyEvents({
-    required double latitude,
-    required double longitude,
-  });
+  Future<List<HomeEventDto>> getEvents(HomeEventsQueryParams query);
 }
 
 class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
@@ -37,38 +29,10 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   }
 
   @override
-  Future<List<HomeEventDto>> getUpcomingEvents({
-    required String city,
-    required DateTime startDateTime,
-  }) {
-    return _getEvents({
-      'city': city,
-      'startDateTime': TicketmasterDateTime.format(startDateTime),
-      'sort': 'date,asc',
-      'size': 10,
-    });
-  }
-
-  @override
-  Future<List<HomeEventDto>> getNearbyEvents({
-    required double latitude,
-    required double longitude,
-  }) {
-    return _getEvents({
-      'latlong': '$latitude,$longitude',
-      'radius': 20,
-      'unit': 'km',
-      'sort': 'distance,asc',
-      'size': 10,
-    });
-  }
-
-  Future<List<HomeEventDto>> _getEvents(
-    Map<String, dynamic> queryParameters,
-  ) async {
+  Future<List<HomeEventDto>> getEvents(HomeEventsQueryParams query) async {
     final response = await _dio.get<Map<String, dynamic>>(
       'events.json',
-      queryParameters: queryParameters,
+      queryParameters: query.toJson(),
     );
     return IsolateParser.run(
       _parseHomeEvents,
