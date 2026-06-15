@@ -1,6 +1,7 @@
+import 'dart:convert';
 import 'package:dio/dio.dart';
-
 import '../../../../core/networking/ticketmaster_date_time.dart';
+import '../../../../core/utils/isolate_parser.dart';
 import '../models/home_classification_dto.dart';
 import '../models/home_event_dto.dart';
 
@@ -25,15 +26,8 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
 
   @override
   Future<List<HomeClassificationDto>> getClassifications() async {
-    final response = await _dio.get<Map<String, dynamic>>(
-      'classifications.json',
-    );
-    final embedded = _asMap(response.data?['_embedded']);
-    final items = _asList(embedded?['classifications']);
-    return items
-        .whereType<Map<String, dynamic>>()
-        .map(HomeClassificationDto.fromJson)
-        .toList();
+    final response = await _dio.get<String>('classifications.json');
+    return IsolateParser.run(_parseHomeClassifications, response.data ?? '{}');
   }
 
   @override
@@ -66,23 +60,43 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   Future<List<HomeEventDto>> _getEvents(
     Map<String, dynamic> queryParameters,
   ) async {
-    final response = await _dio.get<Map<String, dynamic>>(
+    final response = await _dio.get<String>(
       'events.json',
       queryParameters: queryParameters,
     );
-    final embedded = _asMap(response.data?['_embedded']);
-    final items = _asList(embedded?['events']);
-    return items
-        .whereType<Map<String, dynamic>>()
-        .map(HomeEventDto.fromJson)
-        .toList();
+    return IsolateParser.run(_parseHomeEvents, response.data ?? '{}');
   }
+}
 
-  Map<String, dynamic>? _asMap(Object? value) {
-    return value is Map<String, dynamic> ? value : null;
-  }
+List<HomeClassificationDto> _parseHomeClassifications(String responseBody) {
+  final data = _decodeMap(responseBody);
+  final embedded = _asMap(data['_embedded']);
+  final items = _asList(embedded?['classifications']);
+  return items
+      .whereType<Map<String, dynamic>>()
+      .map(HomeClassificationDto.fromJson)
+      .toList();
+}
 
-  List<dynamic> _asList(Object? value) {
-    return value is List<dynamic> ? value : const [];
-  }
+List<HomeEventDto> _parseHomeEvents(String responseBody) {
+  final data = _decodeMap(responseBody);
+  final embedded = _asMap(data['_embedded']);
+  final items = _asList(embedded?['events']);
+  return items
+      .whereType<Map<String, dynamic>>()
+      .map(HomeEventDto.fromJson)
+      .toList();
+}
+
+Map<String, dynamic> _decodeMap(String responseBody) {
+  final decoded = jsonDecode(responseBody);
+  return decoded is Map<String, dynamic> ? decoded : const {};
+}
+
+Map<String, dynamic>? _asMap(Object? value) {
+  return value is Map<String, dynamic> ? value : null;
+}
+
+List<dynamic> _asList(Object? value) {
+  return value is List<dynamic> ? value : const [];
 }

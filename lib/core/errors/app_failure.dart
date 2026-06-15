@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
@@ -22,7 +24,10 @@ class AppFailure implements Exception {
         );
       }
 
-      final data = error.response?.data;
+      final responseData = error.response?.data;
+      final data = responseData is String
+          ? _decodeResponse(responseData)
+          : responseData;
       if (data is Map<String, dynamic>) {
         final fault = data['fault'];
         if (fault is Map<String, dynamic>) {
@@ -52,4 +57,12 @@ class AppFailure implements Exception {
 
   @override
   String toString() => message;
+
+  static Object? _decodeResponse(String value) {
+    try {
+      return jsonDecode(value);
+    } on FormatException {
+      return value;
+    }
+  }
 }

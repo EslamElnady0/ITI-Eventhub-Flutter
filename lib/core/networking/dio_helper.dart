@@ -15,7 +15,7 @@ class DioHelper {
         connectTimeout: const Duration(seconds: 15),
         receiveTimeout: const Duration(seconds: 20),
         sendTimeout: const Duration(seconds: 15),
-        responseType: ResponseType.json,
+        responseType: ResponseType.plain,
         headers: const {'Accept': 'application/json'},
         queryParameters: const {'apikey': apiKey},
       ),

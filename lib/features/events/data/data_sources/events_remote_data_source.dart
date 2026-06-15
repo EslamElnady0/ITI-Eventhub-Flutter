@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 
 import '../../../../core/networking/ticketmaster_date_time.dart';
+import '../../../../core/utils/isolate_parser.dart';
 import '../entities/event_query.dart';
 import '../models/event_dto.dart';
 
@@ -65,31 +68,23 @@ class EventsRemoteDataSourceImpl implements EventsRemoteDataSource {
       }
     }
 
-    final response = await _dio.get<Map<String, dynamic>>(
+    final response = await _dio.get<String>(
       'events.json',
       queryParameters: queryParameters,
     );
-    final data = response.data ?? const <String, dynamic>{};
-    final embedded = data['_embedded'] as Map<String, dynamic>?;
-    final items = embedded?['events'] as List<dynamic>? ?? const [];
-    final page = data['page'] as Map<String, dynamic>?;
-
-    return EventDtoPage(
-      events: items
-          .whereType<Map<String, dynamic>>()
-          .map(EventDto.fromJson)
-          .toList(),
-      page: (page?['number'] as num?)?.toInt() ?? query.page,
-      totalPages: (page?['totalPages'] as num?)?.toInt() ?? 0,
+    return IsolateParser.run(
+      _parseEventPage,
+      _EventPageParserMessage(
+        responseBody: response.data ?? '{}',
+        fallbackPage: query.page,
+      ),
     );
   }
 
   @override
   Future<EventDto> getEventDetails(String eventId) async {
-    final response = await _dio.get<Map<String, dynamic>>(
-      'events/$eventId.json',
-    );
-    return EventDto.fromJson(response.data ?? const {});
+    final response = await _dio.get<String>('events/$eventId.json');
+    return IsolateParser.run(_parseEventDetails, response.data ?? '{}');
   }
 
   (DateTime, DateTime?) _dateRange(EventQuery query) {
@@ -112,4 +107,47 @@ class EventsRemoteDataSourceImpl implements EventsRemoteDataSource {
         return (now, null);
     }
   }
+}
+
+class _EventPageParserMessage {
+  const _EventPageParserMessage({
+    required this.responseBody,
+    required this.fallbackPage,
+  });
+
+  final String responseBody;
+  final int fallbackPage;
+}
+
+EventDtoPage _parseEventPage(_EventPageParserMessage message) {
+  final data = _decodeMap(message.responseBody);
+  final embedded = _asMap(data['_embedded']);
+  final items = _asList(embedded?['events']);
+  final page = _asMap(data['page']);
+
+  return EventDtoPage(
+    events: items
+        .whereType<Map<String, dynamic>>()
+        .map(EventDto.fromJson)
+        .toList(),
+    page: (page?['number'] as num?)?.toInt() ?? message.fallbackPage,
+    totalPages: (page?['totalPages'] as num?)?.toInt() ?? 0,
+  );
+}
+
+EventDto _parseEventDetails(String responseBody) {
+  return EventDto.fromJson(_decodeMap(responseBody));
+}
+
+Map<String, dynamic> _decodeMap(String responseBody) {
+  final decoded = jsonDecode(responseBody);
+  return decoded is Map<String, dynamic> ? decoded : const {};
+}
+
+Map<String, dynamic>? _asMap(Object? value) {
+  return value is Map<String, dynamic> ? value : null;
+}
+
+List<dynamic> _asList(Object? value) {
+  return value is List<dynamic> ? value : const [];
 }
