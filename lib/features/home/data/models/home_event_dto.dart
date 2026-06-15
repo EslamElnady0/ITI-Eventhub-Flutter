@@ -1,5 +1,6 @@
 import 'package:intl/intl.dart';
 
+import '../../../../core/helpers/json_extensions.dart';
 import '../entities/home_event_entity.dart';
 
 class HomeEventDto {
@@ -26,16 +27,17 @@ class HomeEventDto {
   final double? distance;
 
   factory HomeEventDto.fromJson(Map<String, dynamic> json) {
-    final dates = _asMap(json['dates']);
-    final start = _asMap(dates?['start']);
-    final embedded = _asMap(json['_embedded']);
-    final venues = _asList(embedded?['venues']);
+    final dates = (json['dates'] as Object?).asJsonMap();
+    final start = (dates?['start'] as Object?).asJsonMap();
+    final embedded = (json['_embedded'] as Object?).asJsonMap();
+    final venues = (embedded?['venues'] as Object?).asJsonList();
     final venue = venues.whereType<Map<String, dynamic>>().firstOrNull;
-    final city = _asMap(venue?['city']);
-    final address = _asMap(venue?['address']);
-    final images = _asList(
-      json['images'],
-    ).whereType<Map<String, dynamic>>().toList();
+    final city = (venue?['city'] as Object?).asJsonMap();
+    final address = (venue?['address'] as Object?).asJsonMap();
+    final images = (json['images'] as Object?)
+        .asJsonList()
+        .whereType<Map<String, dynamic>>()
+        .toList();
     images.sort(
       (a, b) =>
           ((b['width'] as num?) ?? 0).compareTo((a['width'] as num?) ?? 0),
@@ -88,13 +90,5 @@ class HomeEventDto {
     if (value == null || value.isEmpty) return '';
     final date = DateTime.tryParse('2000-01-01T$value');
     return date == null ? '' : DateFormat('h:mm a').format(date);
-  }
-
-  static Map<String, dynamic>? _asMap(Object? value) {
-    return value is Map<String, dynamic> ? value : null;
-  }
-
-  static List<dynamic> _asList(Object? value) {
-    return value is List<dynamic> ? value : const [];
   }
 }

@@ -15,7 +15,7 @@ class DioHelper {
         connectTimeout: const Duration(seconds: 15),
         receiveTimeout: const Duration(seconds: 20),
         sendTimeout: const Duration(seconds: 15),
-        responseType: ResponseType.plain,
+        // responseType: ResponseType.plain,
         headers: const {'Accept': 'application/json'},
         queryParameters: const {'apikey': apiKey},
       ),
@@ -24,11 +24,15 @@ class DioHelper {
     if (kDebugMode) {
       dio.interceptors.add(
         PrettyDioLogger(
+          request: true,
           requestHeader: false,
           requestBody: false,
           responseHeader: false,
           responseBody: true,
-          compact: true,
+          error: true,
+          compact: false,
+          maxWidth: 120,
+          logPrint: (message) => debugPrint(message.toString()),
         ),
       );
     }
