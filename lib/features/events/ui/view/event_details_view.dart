@@ -5,7 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/widgets/custom_scaffold.dart';
 import '../../data/entities/event_entity.dart';
-import '../cubit/event_details_cubit.dart';
+import '../cubit/details/event_details_cubit.dart';
 import 'widgets/about_event_section.dart';
 import 'widgets/event_details_bottom.dart';
 import 'widgets/event_details_header.dart';

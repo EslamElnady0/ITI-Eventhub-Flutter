@@ -1,9 +1,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/errors/app_failure.dart';
-import '../../data/entities/event_entity.dart';
-import '../../data/repos/events_repository.dart';
+import '../../../../../core/errors/app_failure.dart';
+import '../../../data/entities/event_entity.dart';
+import '../../../data/repos/events_repository.dart';
 
 part 'event_details_state.dart';
 

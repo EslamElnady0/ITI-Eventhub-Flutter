@@ -2,9 +2,9 @@ import 'dart:developer' as developer;
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../features/events/ui/cubit/event_details_cubit.dart';
-import '../../features/events/ui/cubit/events_list_cubit.dart';
-import '../../features/events/ui/cubit/search_cubit.dart';
+import '../../features/events/ui/cubit/details/event_details_cubit.dart';
+import '../../features/events/ui/cubit/events_list/events_list_cubit.dart';
+import '../../features/events/ui/cubit/search/search_cubit.dart';
 import '../../features/home/ui/cubit/home_cubit.dart';
 
 class AppBlocObserver extends BlocObserver {

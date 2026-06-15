@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/widgets/custom_scaffold.dart';
 import '../../data/entities/event_query.dart';
-import '../cubit/events_list_cubit.dart';
+import '../cubit/events_list/events_list_cubit.dart';
 import 'event_details_view.dart';
 import 'search_view.dart';
 import 'widgets/events_list/events_list_app_bar.dart';

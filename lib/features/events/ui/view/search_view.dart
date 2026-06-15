@@ -8,7 +8,7 @@ import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/theme/colors.dart';
 import '../../../../core/widgets/custom_scaffold.dart';
 import '../../../home/ui/view/widgets/explore view/search_bar_widget.dart';
-import '../cubit/search_cubit.dart';
+import '../cubit/search/search_cubit.dart';
 import 'event_details_view.dart';
 import 'widgets/filter/event_filter_bottom_sheet.dart';
 import 'widgets/search/horizontal_event_card.dart';
