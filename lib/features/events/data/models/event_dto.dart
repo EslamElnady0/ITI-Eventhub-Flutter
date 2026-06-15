@@ -2,6 +2,18 @@ import 'package:intl/intl.dart';
 
 import '../entities/event_entity.dart';
 
+class EventDtoPage {
+  const EventDtoPage({
+    required this.events,
+    required this.page,
+    required this.totalPages,
+  });
+
+  final List<EventDto> events;
+  final int page;
+  final int totalPages;
+}
+
 class EventDto {
   const EventDto({
     this.id = '',

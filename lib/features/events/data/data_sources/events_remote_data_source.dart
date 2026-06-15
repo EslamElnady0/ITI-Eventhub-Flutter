@@ -5,18 +5,6 @@ import '../../../../core/utils/isolate_parser.dart';
 import '../models/event_dto.dart';
 import '../models/events_query_params.dart';
 
-class EventDtoPage {
-  const EventDtoPage({
-    required this.events,
-    required this.page,
-    required this.totalPages,
-  });
-
-  final List<EventDto> events;
-  final int page;
-  final int totalPages;
-}
-
 abstract class EventsRemoteDataSource {
   Future<EventDtoPage> getEvents(EventsQueryParams query);
 
