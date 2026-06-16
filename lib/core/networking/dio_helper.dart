@@ -28,7 +28,7 @@ class DioHelper {
           requestHeader: true,
           requestBody: true,
           responseHeader: false,
-          responseBody: true,
+          responseBody: false,
           error: true,
           compact: false,
           maxWidth: 240,
