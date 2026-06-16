@@ -108,7 +108,7 @@ class AppStrings {
   static const String locationLongboard = "Longboard Margarita Bar";
   static const String moreOptions = "More options";
   static const String profileName = "David Silbia";
-  static const String followingCount = "350";
+  static const String followingCount = "0";
   static const String followersCount = "346";
   static const String following = "Following";
   static const String followers = "Followers";
