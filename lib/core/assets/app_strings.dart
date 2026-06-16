@@ -114,4 +114,9 @@ class AppStrings {
   static const String followers = "Followers";
   static const String about = "About";
   static const String favs = "Favs";
+  static const String removeFavoriteTitle = "Remove favorite?";
+  static const String removeFavoriteMessage =
+      "This event will be removed from your favorites.";
+  static const String cancel = "Cancel";
+  static const String remove = "Remove";
 }

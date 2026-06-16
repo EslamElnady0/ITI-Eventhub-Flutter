@@ -7,6 +7,7 @@ import '../../../../../../core/theme/colors.dart';
 import '../../../../../../core/widgets/app_network_image.dart';
 import '../../../../data/entities/event_entity.dart';
 import '../../../cubit/favorites/favorites_cubit.dart';
+import '../remove_favorite_confirmation_dialog.dart';
 
 class HorizontalEventCard extends StatelessWidget {
   final EventEntity event;
@@ -99,8 +100,13 @@ class HorizontalEventCard extends StatelessWidget {
                 builder: (context, isFavorite) {
                   return IconButton(
                     tooltip: isFavorite ? 'Remove favorite' : 'Save event',
-                    onPressed: () =>
-                        context.read<FavoritesCubit>().toggle(event),
+                    onPressed: () async {
+                      final shouldToggle =
+                          !isFavorite ||
+                          await showRemoveFavoriteConfirmationDialog(context);
+                      if (!context.mounted || !shouldToggle) return;
+                      context.read<FavoritesCubit>().toggle(event);
+                    },
                     icon: Icon(
                       isFavorite
                           ? Icons.bookmark

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:url_launcher/url_launcher.dart';
-
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/widgets/custom_scaffold.dart';
 import '../../data/entities/event_entity.dart';
@@ -89,21 +87,11 @@ class _DetailsContent extends StatelessWidget {
   }
 
   Future<void> _openTicket(BuildContext context) async {
-    final uri = Uri.tryParse(event.ticketUrl);
-    if (uri != null) {
-      try {
-        final launched = await launchUrl(
-          uri,
-          mode: LaunchMode.externalApplication,
-        );
-        if (launched) return;
-      } on Exception {
-        // The UI message below handles unavailable browser applications.
-      }
-    }
     if (context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Ticket link is not available.')),
+        const SnackBar(
+          content: Text('To be implemented: Open ticket link in browser'),
+        ),
       );
     }
   }

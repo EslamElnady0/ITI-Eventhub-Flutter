@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../../../core/widgets/app_network_image.dart';
 import '../../../../../../events/data/entities/event_entity.dart';
 import '../../../../../../events/ui/cubit/favorites/favorites_cubit.dart';
+import '../../../../../../events/ui/view/widgets/remove_favorite_confirmation_dialog.dart';
 import '../../../../../data/entities/home_event_entity.dart';
 import 'event_bookmark_button.dart';
 import 'event_date_badge.dart';
@@ -39,9 +40,14 @@ class EventCardImage extends StatelessWidget {
             builder: (context, isFavorite) {
               return EventBookmarkButton(
                 isFavorite: isFavorite,
-                onPressed: () => context.read<FavoritesCubit>().toggle(
-                  _toFavoriteEvent(event),
-                ),
+                onPressed: () async {
+                  final favoriteEvent = _toFavoriteEvent(event);
+                  final shouldToggle =
+                      !isFavorite ||
+                      await showRemoveFavoriteConfirmationDialog(context);
+                  if (!context.mounted || !shouldToggle) return;
+                  context.read<FavoritesCubit>().toggle(favoriteEvent);
+                },
               );
             },
           ),

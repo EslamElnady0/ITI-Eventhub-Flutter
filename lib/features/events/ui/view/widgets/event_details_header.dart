@@ -8,6 +8,7 @@ import '../../../../../core/widgets/app_network_image.dart';
 import '../../../data/entities/event_entity.dart';
 import '../../cubit/favorites/favorites_cubit.dart';
 import 'floating_engaged_people_view.dart';
+import 'remove_favorite_confirmation_dialog.dart';
 
 class EventDetailsHeader extends StatelessWidget {
   const EventDetailsHeader({super.key, required this.event});
@@ -259,7 +260,13 @@ class _BookmarkButton extends StatelessWidget {
         selector: (state) => state.favoriteIds.contains(event.id),
         builder: (context, isFavorite) {
           return InkWell(
-            onTap: () => context.read<FavoritesCubit>().toggle(event),
+            onTap: () async {
+              final shouldToggle =
+                  !isFavorite ||
+                  await showRemoveFavoriteConfirmationDialog(context);
+              if (!context.mounted || !shouldToggle) return;
+              context.read<FavoritesCubit>().toggle(event);
+            },
             borderRadius: BorderRadius.circular(12),
             child: Padding(
               padding: const EdgeInsets.all(10),
