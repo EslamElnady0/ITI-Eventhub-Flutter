@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../core/errors/app_failure.dart';
+import '../../../../../core/errors/failure_guard.dart';
 import '../../../data/entities/event_entity.dart';
 import '../../../data/entities/event_query.dart';
 import '../../../data/repos/events_repository.dart';
@@ -58,7 +58,11 @@ class SearchCubit extends Cubit<SearchState> {
   Future<void> refresh() => _search(refresh: true);
 
   Future<void> _search({required bool refresh}) async {
-    if (state.isLoadingMore || (!refresh && !state.hasMore)) return;
+    switch (state.isLoadingMore || (!refresh && !state.hasMore)) {
+      case true:
+        return;
+      case false:
+    }
     final requestId = ++_requestId;
     final nextPage = refresh ? 0 : state.page + 1;
 
@@ -72,32 +76,41 @@ class SearchCubit extends Cubit<SearchState> {
       ),
     );
 
-    try {
-      final result = await _repository.getEvents(
-        _query.copyWith(page: nextPage),
-      );
-      if (requestId != _requestId) return;
-      emit(
-        state.copyWith(
-          status: SearchStatus.success,
-          events: refresh ? result.events : [...state.events, ...result.events],
-          page: result.page,
-          hasMore: result.hasMore,
-          isLoadingMore: false,
-        ),
-      );
-    } on AppFailure catch (failure) {
-      if (requestId != _requestId) return;
-      emit(
-        state.copyWith(
-          status: state.events.isEmpty
-              ? SearchStatus.failure
-              : SearchStatus.success,
-          isLoadingMore: false,
-          errorMessage: failure.message,
-        ),
-      );
-    }
+    await FailureGuard.handle(
+      () => _repository.getEvents(_query.copyWith(page: nextPage)),
+      onSuccess: (page) {
+        switch (requestId == _requestId) {
+          case false:
+            return;
+          case true:
+        }
+        emit(
+          state.copyWith(
+            status: SearchStatus.success,
+            events: refresh ? page.events : [...state.events, ...page.events],
+            page: page.page,
+            hasMore: page.hasMore,
+            isLoadingMore: false,
+          ),
+        );
+      },
+      onFailure: (failure) {
+        switch (requestId == _requestId) {
+          case false:
+            return;
+          case true:
+        }
+        emit(
+          state.copyWith(
+            status: state.events.isEmpty
+                ? SearchStatus.failure
+                : SearchStatus.success,
+            isLoadingMore: false,
+            errorMessage: failure.message,
+          ),
+        );
+      },
+    );
   }
 
   @override

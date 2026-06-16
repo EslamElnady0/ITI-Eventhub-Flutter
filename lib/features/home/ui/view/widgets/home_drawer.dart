@@ -10,12 +10,16 @@ class HomeDrawer extends StatelessWidget {
   final VoidCallback onProfileTap;
   final VoidCallback onCalendarTap;
   final VoidCallback onSignOutTap;
+  final String displayName;
+  final String? displayEmail;
 
   const HomeDrawer({
     super.key,
     required this.onProfileTap,
     required this.onCalendarTap,
     required this.onSignOutTap,
+    required this.displayName,
+    this.displayEmail,
   });
 
   @override
@@ -32,9 +36,18 @@ class HomeDrawer extends StatelessWidget {
             ),
             vGap(12),
             Text(
-              AppStrings.organizerName,
+              displayName,
               style: AppTextStyles.font18SemiBold.withColor(AppColors.black),
             ),
+            if (displayEmail != null && displayEmail!.isNotEmpty) ...[
+              vGap(4),
+              Text(
+                displayEmail!,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.font14Medium.withColor(AppColors.darkGray),
+              ),
+            ],
             vGap(28),
             ListTile(
               contentPadding: EdgeInsets.zero,

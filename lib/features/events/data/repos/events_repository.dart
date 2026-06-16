@@ -1,4 +1,5 @@
-import '../../../../core/errors/app_failure.dart';
+import '../../../../core/errors/failure_guard.dart';
+import '../data_sources/events_local_data_source.dart';
 import '../data_sources/events_remote_data_source.dart';
 import '../entities/event_entity.dart';
 import '../entities/event_query.dart';
@@ -8,16 +9,31 @@ abstract class EventsRepository {
   Future<EventPage> getEvents(EventQuery query);
 
   Future<EventEntity> getEventDetails(String eventId);
+
+  Future<List<EventEntity>> getFavoriteEvents(String userId);
+
+  Future<Set<String>> getFavoriteEventIds(String userId);
+
+  Future<void> addFavoriteEvent({
+    required String userId,
+    required EventEntity event,
+  });
+
+  Future<void> removeFavoriteEvent({
+    required String userId,
+    required String eventId,
+  });
 }
 
 class EventsRepositoryImpl implements EventsRepository {
-  const EventsRepositoryImpl(this._remoteDataSource);
+  const EventsRepositoryImpl(this._remoteDataSource, this._localDataSource);
 
   final EventsRemoteDataSource _remoteDataSource;
+  final EventsLocalDataSource _localDataSource;
 
   @override
   Future<EventPage> getEvents(EventQuery query) async {
-    try {
+    return FailureGuard.run(() async {
       final result = await _remoteDataSource.getEvents(_toQueryParams(query));
       var events = result.events.map((event) => event.toEntity()).toList();
 
@@ -34,18 +50,44 @@ class EventsRepositoryImpl implements EventsRepository {
         page: result.page,
         totalPages: result.totalPages,
       );
-    } catch (error) {
-      throw AppFailure.fromException(error);
-    }
+    });
   }
 
   @override
   Future<EventEntity> getEventDetails(String eventId) async {
-    try {
+    return FailureGuard.run(() async {
       return (await _remoteDataSource.getEventDetails(eventId)).toEntity();
-    } catch (error) {
-      throw AppFailure.fromException(error);
-    }
+    });
+  }
+
+  @override
+  Future<List<EventEntity>> getFavoriteEvents(String userId) async {
+    return FailureGuard.run(() => _localDataSource.getFavoriteEvents(userId));
+  }
+
+  @override
+  Future<Set<String>> getFavoriteEventIds(String userId) async {
+    return FailureGuard.run(() => _localDataSource.getFavoriteEventIds(userId));
+  }
+
+  @override
+  Future<void> addFavoriteEvent({
+    required String userId,
+    required EventEntity event,
+  }) async {
+    return FailureGuard.run(
+      () => _localDataSource.addFavorite(userId: userId, event: event),
+    );
+  }
+
+  @override
+  Future<void> removeFavoriteEvent({
+    required String userId,
+    required String eventId,
+  }) async {
+    return FailureGuard.run(
+      () => _localDataSource.removeFavorite(userId: userId, eventId: eventId),
+    );
   }
 
   EventsQueryParams _toQueryParams(EventQuery query) {

@@ -4,7 +4,9 @@ import 'package:go_router/go_router.dart';
 import '../../features/events/data/entities/event_query.dart';
 import '../../features/events/ui/cubit/details/event_details_cubit.dart';
 import '../../features/events/ui/cubit/events_list/events_list_cubit.dart';
+import '../../features/events/ui/cubit/favorites/favorites_cubit.dart';
 import '../../features/events/ui/cubit/search/search_cubit.dart';
+import '../../features/auth/ui/cubit/auth_cubit.dart';
 import '../../features/auth/ui/view/login_view.dart';
 import '../../features/auth/ui/view/signup_view.dart';
 import '../../features/events/ui/view/all_events_view.dart';
@@ -14,6 +16,7 @@ import '../../features/events/ui/view/search_view.dart';
 import '../../features/home/ui/view/explore_view.dart';
 import '../../features/home/ui/view/home_view.dart';
 import '../../features/map/map_view.dart';
+import '../../features/profile/ui/cubit/profile_cubit.dart';
 import '../../features/profile/ui/view/profile_view.dart';
 import '../../features/onboarding/ui/view/onboarding_view.dart';
 import '../../features/splash/ui/splash_view.dart';
@@ -48,8 +51,14 @@ class AppRouter {
     routes: [
       GoRoute(
         path: '/',
-        pageBuilder: (context, state) =>
-            _buildPageWithTransition(context, state, const SplashView()),
+        pageBuilder: (context, state) => _buildPageWithTransition(
+          context,
+          state,
+          BlocProvider(
+            create: (_) => getIt<AuthCubit>(),
+            child: const SplashView(),
+          ),
+        ),
       ),
       GoRoute(
         path: OnboardingView.routeName,
@@ -58,17 +67,35 @@ class AppRouter {
       ),
       GoRoute(
         path: LoginView.routeName,
-        pageBuilder: (context, state) =>
-            _buildPageWithTransition(context, state, const LoginView()),
+        pageBuilder: (context, state) => _buildPageWithTransition(
+          context,
+          state,
+          BlocProvider(
+            create: (_) => getIt<AuthCubit>(),
+            child: const LoginView(),
+          ),
+        ),
       ),
       GoRoute(
         path: SignupView.routeName,
-        pageBuilder: (context, state) =>
-            _buildPageWithTransition(context, state, const SignupView()),
+        pageBuilder: (context, state) => _buildPageWithTransition(
+          context,
+          state,
+          BlocProvider(
+            create: (_) => getIt<AuthCubit>(),
+            child: const SignupView(),
+          ),
+        ),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
-          return HomeView(navigationShell: navigationShell);
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(create: (_) => getIt<AuthCubit>()..restoreSession()),
+              BlocProvider.value(value: getIt<FavoritesCubit>()..load()),
+            ],
+            child: HomeView(navigationShell: navigationShell),
+          );
         },
         branches: [
           StatefulShellBranch(
@@ -107,7 +134,10 @@ class AppRouter {
             routes: [
               GoRoute(
                 path: ProfileView.routeName,
-                builder: (context, state) => const ProfileView(),
+                builder: (context, state) => BlocProvider(
+                  create: (_) => getIt<ProfileCubit>()..load(),
+                  child: const ProfileView(),
+                ),
               ),
             ],
           ),
@@ -120,8 +150,13 @@ class AppRouter {
           return _buildPageWithTransition(
             context,
             state,
-            BlocProvider(
-              create: (_) => getIt<EventDetailsCubit>()..load(eventId),
+            MultiBlocProvider(
+              providers: [
+                BlocProvider(
+                  create: (_) => getIt<EventDetailsCubit>()..load(eventId),
+                ),
+                BlocProvider.value(value: getIt<FavoritesCubit>()..load()),
+              ],
               child: EventDetailsView(eventId: eventId),
             ),
           );
@@ -132,8 +167,11 @@ class AppRouter {
         pageBuilder: (context, state) => _buildPageWithTransition(
           context,
           state,
-          BlocProvider(
-            create: (_) => getIt<SearchCubit>()..loadInitial(),
+          MultiBlocProvider(
+            providers: [
+              BlocProvider(create: (_) => getIt<SearchCubit>()..loadInitial()),
+              BlocProvider.value(value: getIt<FavoritesCubit>()..load()),
+            ],
             child: const SearchView(),
           ),
         ),
@@ -148,8 +186,13 @@ class AppRouter {
           return _buildPageWithTransition(
             context,
             state,
-            BlocProvider(
-              create: (_) => getIt<EventsListCubit>(param1: mode)..load(),
+            MultiBlocProvider(
+              providers: [
+                BlocProvider(
+                  create: (_) => getIt<EventsListCubit>(param1: mode)..load(),
+                ),
+                BlocProvider.value(value: getIt<FavoritesCubit>()..load()),
+              ],
               child: EventsListView(mode: mode),
             ),
           );

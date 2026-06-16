@@ -31,6 +31,13 @@ class LoginForm extends StatelessWidget {
               child: SvgPicture.asset(Assets.assetsImagesMailIcon),
             ),
             controller: emailController,
+            keyboardType: TextInputType.emailAddress,
+            validator: (value) {
+              final email = value?.trim() ?? '';
+              if (email.isEmpty) return 'Email is required.';
+              if (!email.contains('@')) return 'Enter a valid email.';
+              return null;
+            },
           ),
           vGap(20),
           ValueListenableBuilder<bool>(
@@ -54,6 +61,10 @@ class LoginForm extends StatelessWidget {
                 ),
                 controller: passwordController,
                 obscureText: !isPasswordVisible.value,
+                validator: (value) {
+                  if ((value ?? '').isEmpty) return 'Password is required.';
+                  return null;
+                },
               );
             },
           ),

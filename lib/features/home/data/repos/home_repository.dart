@@ -1,4 +1,4 @@
-import '../../../../core/errors/app_failure.dart';
+import '../../../../core/errors/failure_guard.dart';
 import '../data_sources/home_remote_data_source.dart';
 import '../entities/home_category_entity.dart';
 import '../entities/home_event_entity.dart';
@@ -27,7 +27,7 @@ class HomeRepositoryImpl implements HomeRepository {
 
   @override
   Future<HomeData> getHomeData() async {
-    try {
+    return FailureGuard.run(() async {
       final classifications = await _remoteDataSource.getClassifications();
       final upcomingEventDtos = await _remoteDataSource.getEvents(
         UpcomingEventsQueryParams(
@@ -57,8 +57,6 @@ class HomeRepositoryImpl implements HomeRepository {
         upcomingEvents: upcomingEventDtos.map((dto) => dto.toEntity()).toList(),
         nearbyEvents: nearbyEventDtos.map((dto) => dto.toEntity()).toList(),
       );
-    } catch (error) {
-      throw AppFailure.fromException(error);
-    }
+    });
   }
 }

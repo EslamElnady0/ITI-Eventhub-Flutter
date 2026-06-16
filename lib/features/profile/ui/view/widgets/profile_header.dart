@@ -8,7 +8,16 @@ import '../../../../../core/theme/colors.dart';
 import 'profile_stat_item.dart';
 
 class ProfileHeader extends StatelessWidget {
-  const ProfileHeader({super.key});
+  const ProfileHeader({
+    super.key,
+    required this.name,
+    required this.email,
+    required this.favoritesCount,
+  });
+
+  final String name;
+  final String email;
+  final int favoritesCount;
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +29,15 @@ class ProfileHeader extends StatelessWidget {
         ),
         vGap(12),
         Text(
-          AppStrings.profileName,
+          name,
           style: AppTextStyles.font20SemiBold.withColor(AppColors.black),
+        ),
+        vGap(4),
+        Text(
+          email,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.font14Medium.withColor(AppColors.darkGray),
         ),
         vGap(14),
         IntrinsicHeight(
@@ -37,9 +53,9 @@ class ProfileHeader extends StatelessWidget {
                 margin: const EdgeInsets.symmetric(horizontal: 28),
                 color: AppColors.gray,
               ),
-              const ProfileStatItem(
-                value: AppStrings.followersCount,
-                label: AppStrings.followers,
+              ProfileStatItem(
+                value: favoritesCount.toString(),
+                label: AppStrings.favs,
               ),
             ],
           ),

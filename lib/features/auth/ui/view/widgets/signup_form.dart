@@ -39,6 +39,13 @@ class SignupForm extends StatelessWidget {
               child: SvgPicture.asset(Assets.assetsImagesProfileIcon),
             ),
             controller: nameController,
+            textInputAction: TextInputAction.next,
+            validator: (value) {
+              if ((value?.trim() ?? '').isEmpty) {
+                return 'Full name is required.';
+              }
+              return null;
+            },
           ),
           vGap(20),
           CustomTextField(
@@ -48,6 +55,14 @@ class SignupForm extends StatelessWidget {
               child: SvgPicture.asset(Assets.assetsImagesMailIcon),
             ),
             controller: emailController,
+            keyboardType: TextInputType.emailAddress,
+            textInputAction: TextInputAction.next,
+            validator: (value) {
+              final email = value?.trim() ?? '';
+              if (email.isEmpty) return 'Email is required.';
+              if (!email.contains('@')) return 'Enter a valid email.';
+              return null;
+            },
           ),
           vGap(20),
           ValueListenableBuilder<bool>(
@@ -71,6 +86,15 @@ class SignupForm extends StatelessWidget {
                 ),
                 controller: passwordController,
                 obscureText: !isPasswordVisible.value,
+                textInputAction: TextInputAction.next,
+                validator: (value) {
+                  final password = value ?? '';
+                  if (password.isEmpty) return 'Password is required.';
+                  if (password.length < 6) {
+                    return 'Password must be at least 6 characters.';
+                  }
+                  return null;
+                },
               );
             },
           ),
@@ -96,6 +120,12 @@ class SignupForm extends StatelessWidget {
                 ),
                 controller: confirmPasswordController,
                 obscureText: !isConfirmPasswordVisible.value,
+                validator: (value) {
+                  if (value != passwordController.text) {
+                    return 'Passwords do not match.';
+                  }
+                  return null;
+                },
               );
             },
           ),

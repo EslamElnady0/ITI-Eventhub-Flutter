@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iti_flutter_proj/core/widgets/custom_scaffold.dart';
 
+import '../../../auth/ui/cubit/auth_cubit.dart';
+import '../../../events/ui/cubit/favorites/favorites_cubit.dart';
 import '../../../../core/theme/colors.dart';
 import '../../../auth/ui/view/login_view.dart';
 import 'widgets/home_drawer.dart';
@@ -43,12 +46,23 @@ class _HomeViewState extends State<HomeView> {
           ),
         ],
       ),
-      drawer: HomeDrawer(
-        onProfileTap: () => _goToBranch(3),
-        onCalendarTap: () => _goToBranch(1),
-        onSignOutTap: () {
-          _drawerController.hideDrawer();
-          context.go(LoginView.routeName);
+      drawer: BlocBuilder<AuthCubit, AuthState>(
+        builder: (context, state) {
+          final user = state.user;
+          return HomeDrawer(
+            displayName: user?.name ?? 'Guest',
+            displayEmail: user?.email,
+            onProfileTap: () => _goToBranch(3),
+            onCalendarTap: () => _goToBranch(1),
+            onSignOutTap: () async {
+              _drawerController.hideDrawer();
+              await context.read<AuthCubit>().logout();
+              if (!context.mounted) return;
+              await context.read<FavoritesCubit>().load();
+              if (!context.mounted) return;
+              context.go(LoginView.routeName);
+            },
+          );
         },
       ),
       child: HomeDrawerScope(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+
 import '../../../../core/assets/app_strings.dart';
 import '../../../../core/assets/assets.dart';
 import '../../../../core/helpers/spacing.dart';
@@ -8,10 +10,12 @@ import '../../../../core/theme/colors.dart';
 import '../../../../core/widgets/custom_button.dart';
 import '../../../../core/widgets/custom_scaffold.dart';
 import '../../../home/ui/view/explore_view.dart';
+import '../cubit/auth_cubit.dart';
 import 'signup_view.dart';
 import 'widgets/auth_footer.dart';
 import 'widgets/login_form.dart';
 import 'widgets/remember_me_and_forget_password.dart';
+import 'widgets/remembered_user_section.dart';
 import 'widgets/social_auth_button.dart';
 
 class LoginView extends StatefulWidget {
@@ -36,6 +40,9 @@ class _LoginViewState extends State<LoginView> {
     _isPasswordVisible = ValueNotifier<bool>(false);
     _isRememberMeChecked = ValueNotifier<bool>(false);
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) context.read<AuthCubit>().loadRememberedUser();
+    });
   }
 
   @override
@@ -58,6 +65,20 @@ class _LoginViewState extends State<LoginView> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  BlocListener<AuthCubit, AuthState>(
+                    listener: (context, state) async {
+                      if (state.status == AuthStatus.failure &&
+                          state.errorMessage.isNotEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(state.errorMessage)),
+                        );
+                      }
+                      if (state.status == AuthStatus.authenticated) {
+                        _goHome(context);
+                      }
+                    },
+                    child: const SizedBox.shrink(),
+                  ),
                   Align(
                     alignment: Alignment.center,
                     child: Image.asset(
@@ -70,6 +91,7 @@ class _LoginViewState extends State<LoginView> {
                     AppStrings.signIn,
                     style: AppTextStyles.font24Bold.withColor(AppColors.black),
                   ),
+                  const RememberedUserSection(),
                   vGap(16),
                   LoginForm(
                     formKey: _formKey,
@@ -87,13 +109,23 @@ class _LoginViewState extends State<LoginView> {
                   ),
                   vGap(24),
                   Padding(
-                    padding: const .symmetric(horizontal: 32.0),
-                    child: CustomButton(
-                      label: AppStrings.signIn,
-                      onPressed: () {
-                        if (_formKey.currentState?.validate() ?? false) {
-                          context.go(ExploreView.routeName);
-                        }
+                    padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                    child: BlocSelector<AuthCubit, AuthState, bool>(
+                      selector: (state) => state.status == AuthStatus.loading,
+                      builder: (context, isLoading) {
+                        return CustomButton(
+                          label: isLoading ? 'Loading...' : AppStrings.signIn,
+                          onPressed: () {
+                            if (isLoading) return;
+                            if (_formKey.currentState?.validate() ?? false) {
+                              context.read<AuthCubit>().login(
+                                email: _emailController.text,
+                                password: _passwordController.text,
+                                rememberMe: _isRememberMeChecked.value,
+                              );
+                            }
+                          },
+                        );
                       },
                     ),
                   ),
@@ -129,7 +161,6 @@ class _LoginViewState extends State<LoginView> {
                 ],
               ),
             ),
-
             SliverFillRemaining(
               hasScrollBody: false,
               child: Column(
@@ -150,5 +181,11 @@ class _LoginViewState extends State<LoginView> {
         ),
       ),
     );
+  }
+
+  void _goHome(BuildContext context) {
+    final router = GoRouter.of(context);
+    if (!mounted) return;
+    router.go(ExploreView.routeName);
   }
 }

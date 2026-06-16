@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/assets/app_strings.dart';
 import '../../../../core/assets/assets.dart';
+import '../../../../core/di/service_locator.dart';
+import '../../../../core/helpers/local_storage_helper.dart';
 import '../../../../core/widgets/custom_scaffold.dart';
 import '../../../auth/ui/view/login_view.dart';
 import '../ui models/on_boarding_model.dart';
@@ -10,6 +12,7 @@ import 'widgets/onboarding_bottom_section.dart';
 
 class OnboardingView extends StatefulWidget {
   static const String routeName = '/onboarding';
+  static const String isViewedKey = 'is_onboarding_viewed';
 
   const OnboardingView({super.key});
 
@@ -94,11 +97,15 @@ class _OnboardingViewState extends State<OnboardingView> {
         curve: Curves.easeInOut,
       );
     } else {
-      context.go(LoginView.routeName);
+      _finishOnboarding();
     }
   }
 
-  _onSkip() {
+  Future<void> _onSkip() => _finishOnboarding();
+
+  Future<void> _finishOnboarding() async {
+    await getIt<LocalStorageHelper>().setBool(OnboardingView.isViewedKey, true);
+    if (!mounted) return;
     context.go(LoginView.routeName);
   }
 }

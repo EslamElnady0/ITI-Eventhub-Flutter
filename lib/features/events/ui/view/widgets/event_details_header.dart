@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/assets/app_strings.dart';
 import '../../../../../core/theme/app_text_styles.dart';
 import '../../../../../core/theme/colors.dart';
 import '../../../../../core/widgets/app_network_image.dart';
 import '../../../data/entities/event_entity.dart';
+import '../../cubit/favorites/favorites_cubit.dart';
 import 'floating_engaged_people_view.dart';
 
 class EventDetailsHeader extends StatelessWidget {
@@ -112,7 +114,7 @@ class _EventDetailsHeaderDelegate extends SliverPersistentHeaderDelegate {
           right: 0,
           child: Opacity(
             opacity: expandedOpacity,
-            child: const _ExpandedActionBar(),
+            child: _ExpandedActionBar(event: event),
           ),
         ),
         Positioned(
@@ -165,7 +167,9 @@ class _EventDetailsHeaderDelegate extends SliverPersistentHeaderDelegate {
 }
 
 class _ExpandedActionBar extends StatelessWidget {
-  const _ExpandedActionBar();
+  const _ExpandedActionBar({required this.event});
+
+  final EventEntity event;
 
   @override
   Widget build(BuildContext context) {
@@ -180,6 +184,7 @@ class _ExpandedActionBar extends StatelessWidget {
         Padding(
           padding: const EdgeInsetsDirectional.only(end: 16),
           child: _BookmarkButton(
+            event: event,
             foregroundColor: AppColors.white,
             backgroundColor: AppColors.white.withValues(alpha: 0.3),
           ),
@@ -218,9 +223,10 @@ class _CompactActionBar extends StatelessWidget {
             ),
           ),
         ),
-        const Padding(
-          padding: EdgeInsetsDirectional.only(start: 8, end: 12),
+        Padding(
+          padding: const EdgeInsetsDirectional.only(start: 8, end: 12),
           child: _BookmarkButton(
+            event: event,
             foregroundColor: AppColors.primaryColor,
             backgroundColor: Color(0xFFF1F0FF),
           ),
@@ -232,25 +238,39 @@ class _CompactActionBar extends StatelessWidget {
 
 class _BookmarkButton extends StatelessWidget {
   const _BookmarkButton({
+    required this.event,
     required this.foregroundColor,
     required this.backgroundColor,
   });
 
+  final EventEntity? event;
   final Color foregroundColor;
   final Color backgroundColor;
 
   @override
   Widget build(BuildContext context) {
+    final event = this.event;
+    if (event == null) return const SizedBox.shrink();
+
     return Material(
       color: backgroundColor,
       borderRadius: BorderRadius.circular(12),
-      child: InkWell(
-        onTap: () {},
-        borderRadius: BorderRadius.circular(12),
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Icon(Icons.bookmark, color: foregroundColor, size: 22),
-        ),
+      child: BlocSelector<FavoritesCubit, FavoritesState, bool>(
+        selector: (state) => state.favoriteIds.contains(event.id),
+        builder: (context, isFavorite) {
+          return InkWell(
+            onTap: () => context.read<FavoritesCubit>().toggle(event),
+            borderRadius: BorderRadius.circular(12),
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Icon(
+                isFavorite ? Icons.bookmark : Icons.bookmark_border,
+                color: foregroundColor,
+                size: 22,
+              ),
+            ),
+          );
+        },
       ),
     );
   }

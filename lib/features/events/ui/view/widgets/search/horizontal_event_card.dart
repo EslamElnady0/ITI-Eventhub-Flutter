@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../../core/helpers/spacing.dart';
 import '../../../../../../core/theme/app_text_styles.dart';
 import '../../../../../../core/theme/colors.dart';
 import '../../../../../../core/widgets/app_network_image.dart';
 import '../../../../data/entities/event_entity.dart';
+import '../../../cubit/favorites/favorites_cubit.dart';
 
 class HorizontalEventCard extends StatelessWidget {
   final EventEntity event;
@@ -91,6 +93,22 @@ class HorizontalEventCard extends StatelessWidget {
                     ),
                   ],
                 ),
+              ),
+              BlocSelector<FavoritesCubit, FavoritesState, bool>(
+                selector: (state) => state.favoriteIds.contains(event.id),
+                builder: (context, isFavorite) {
+                  return IconButton(
+                    tooltip: isFavorite ? 'Remove favorite' : 'Save event',
+                    onPressed: () =>
+                        context.read<FavoritesCubit>().toggle(event),
+                    icon: Icon(
+                      isFavorite
+                          ? Icons.bookmark
+                          : Icons.bookmark_border_outlined,
+                      color: AppColors.primaryColor,
+                    ),
+                  );
+                },
               ),
             ],
           ),
