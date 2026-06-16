@@ -45,7 +45,7 @@ Future<void> setupDependencies() async {
     ..registerLazySingleton<AuthRepository>(
       () => AuthRepositoryImpl(getIt(), getIt(), getIt()),
     )
-    ..registerFactory(() => AuthCubit(getIt()))
+    ..registerLazySingleton(() => AuthCubit(getIt()))
     ..registerFactory(() => ProfileCubit(getIt()))
     ..registerLazySingleton<HomeRemoteDataSource>(
       () => HomeRemoteDataSourceImpl(getIt()),

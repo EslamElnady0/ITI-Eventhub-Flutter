@@ -54,8 +54,8 @@ class AppRouter {
         pageBuilder: (context, state) => _buildPageWithTransition(
           context,
           state,
-          BlocProvider(
-            create: (_) => getIt<AuthCubit>(),
+          BlocProvider.value(
+            value: getIt<AuthCubit>(),
             child: const SplashView(),
           ),
         ),
@@ -70,8 +70,8 @@ class AppRouter {
         pageBuilder: (context, state) => _buildPageWithTransition(
           context,
           state,
-          BlocProvider(
-            create: (_) => getIt<AuthCubit>(),
+          BlocProvider.value(
+            value: getIt<AuthCubit>(),
             child: const LoginView(),
           ),
         ),
@@ -81,8 +81,8 @@ class AppRouter {
         pageBuilder: (context, state) => _buildPageWithTransition(
           context,
           state,
-          BlocProvider(
-            create: (_) => getIt<AuthCubit>(),
+          BlocProvider.value(
+            value: getIt<AuthCubit>(),
             child: const SignupView(),
           ),
         ),
@@ -91,7 +91,7 @@ class AppRouter {
         builder: (context, state, navigationShell) {
           return MultiBlocProvider(
             providers: [
-              BlocProvider(create: (_) => getIt<AuthCubit>()..restoreSession()),
+              BlocProvider.value(value: getIt<AuthCubit>()..restoreSession()),
               BlocProvider.value(value: getIt<FavoritesCubit>()..load()),
             ],
             child: HomeView(navigationShell: navigationShell),

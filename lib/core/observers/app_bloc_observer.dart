@@ -9,6 +9,18 @@ import '../../features/home/ui/cubit/home_cubit.dart';
 
 class AppBlocObserver extends BlocObserver {
   @override
+  void onCreate(BlocBase<dynamic> bloc) {
+    super.onCreate(bloc);
+    developer.log('Created', name: bloc.runtimeType.toString());
+  }
+
+  @override
+  void onClose(BlocBase<dynamic> bloc) {
+    developer.log('Closed', name: bloc.runtimeType.toString());
+    super.onClose(bloc);
+  }
+
+  @override
   void onChange(BlocBase<dynamic> bloc, Change<dynamic> change) {
     super.onChange(bloc, change);
 
