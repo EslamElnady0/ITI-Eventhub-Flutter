@@ -91,8 +91,8 @@ class AppRouter {
         builder: (context, state, navigationShell) {
           return MultiBlocProvider(
             providers: [
-              BlocProvider.value(value: getIt<AuthCubit>()..restoreSession()),
-              BlocProvider.value(value: getIt<FavoritesCubit>()..load()),
+              BlocProvider.value(value: getIt<AuthCubit>()),
+              BlocProvider.value(value: getIt<FavoritesCubit>()),
             ],
             child: HomeView(navigationShell: navigationShell),
           );

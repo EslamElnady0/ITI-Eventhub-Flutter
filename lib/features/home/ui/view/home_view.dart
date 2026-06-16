@@ -25,6 +25,15 @@ class _HomeViewState extends State<HomeView> {
   final AdvancedDrawerController _drawerController = AdvancedDrawerController();
 
   @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) context.read<FavoritesCubit>().load();
+    });
+  }
+
+  @override
   void dispose() {
     _drawerController.dispose();
     super.dispose();
