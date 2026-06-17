@@ -9,35 +9,40 @@ import '../../../../../../core/theme/colors.dart';
 import '../../../../data/entities/home_category_entity.dart';
 
 class CategoryItem extends StatelessWidget {
-  const CategoryItem({super.key, required this.category});
+  const CategoryItem({super.key, required this.category, this.onTap});
 
   final HomeCategoryEntity category;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     final presentation = _presentationFor(category.name);
 
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      decoration: BoxDecoration(
-        color: presentation.$2,
+    return Material(
+      color: presentation.$2,
+      borderRadius: BorderRadius.circular(24),
+      child: InkWell(
+        onTap: onTap,
         borderRadius: BorderRadius.circular(24),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SvgPicture.asset(
-            presentation.$1,
-            colorFilter: ColorFilter.mode(AppColors.white, .srcIn),
-            width: 18,
-            height: 18,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SvgPicture.asset(
+                presentation.$1,
+                colorFilter: ColorFilter.mode(AppColors.white, .srcIn),
+                width: 18,
+                height: 18,
+              ),
+              hGap(8),
+              Text(
+                category.name,
+                style: AppTextStyles.font16Regular.withColor(AppColors.white),
+              ),
+            ],
           ),
-          hGap(8),
-          Text(
-            category.name,
-            style: AppTextStyles.font16Regular.withColor(AppColors.white),
-          ),
-        ],
+        ),
       ),
     );
   }

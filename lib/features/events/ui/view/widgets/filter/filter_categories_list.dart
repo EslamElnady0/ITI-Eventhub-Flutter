@@ -4,38 +4,53 @@ import '../../../../../../core/assets/app_strings.dart';
 import '../../../../../../core/helpers/spacing.dart';
 import '../../../../../../core/theme/app_text_styles.dart';
 import '../../../../../../core/theme/colors.dart';
-import '../../../models/filter_category_model.dart';
+import '../../../../../home/data/entities/home_category_entity.dart';
 
 class FilterCategoriesList extends StatelessWidget {
   final int selectedIndex;
+  final List<HomeCategoryEntity> categories;
   final ValueChanged<int> onSelected;
 
   const FilterCategoriesList({
     super.key,
     required this.selectedIndex,
+    required this.categories,
     required this.onSelected,
   });
 
-  static const List<FilterCategoryModel> categories = [
-    FilterCategoryModel(
-      title: AppStrings.sports,
-      icon: Icons.sports_basketball,
+  static const List<HomeCategoryEntity> fallbackCategories = [
+    HomeCategoryEntity(
+      id: 'sports',
+      name: AppStrings.sports,
+      apiName: 'sports',
     ),
-    FilterCategoryModel(title: AppStrings.music, icon: Icons.music_note),
-    FilterCategoryModel(title: AppStrings.art, icon: Icons.palette_outlined),
-    FilterCategoryModel(title: AppStrings.food, icon: Icons.restaurant),
+    HomeCategoryEntity(id: 'music', name: AppStrings.music, apiName: 'music'),
+    HomeCategoryEntity(
+      id: 'arts',
+      name: AppStrings.art,
+      apiName: 'Arts & Theatre',
+    ),
+    HomeCategoryEntity(
+      id: 'food',
+      name: AppStrings.food,
+      apiName: 'Food & Drink',
+    ),
   ];
 
   @override
   Widget build(BuildContext context) {
+    final categoryOptions = categories.isEmpty
+        ? fallbackCategories
+        : categories;
+
     return SizedBox(
       height: 86,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        itemCount: categories.length,
+        itemCount: categoryOptions.length,
         separatorBuilder: (context, index) => hGap(12),
         itemBuilder: (context, index) {
-          final category = categories[index];
+          final category = categoryOptions[index];
           final selected = index == selectedIndex;
 
           return InkWell(
@@ -71,16 +86,18 @@ class FilterCategoriesList extends StatelessWidget {
                           : null,
                     ),
                     child: Icon(
-                      category.icon,
+                      _iconFor(category.name),
                       color: selected ? AppColors.white : AppColors.darkGray,
                     ),
                   ),
                   vGap(6),
                   Text(
-                    category.title,
+                    category.name,
                     style: AppTextStyles.font12Medium.withColor(
                       AppColors.black,
                     ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ],
               ),
@@ -89,5 +106,24 @@ class FilterCategoriesList extends StatelessWidget {
         },
       ),
     );
+  }
+
+  IconData _iconFor(String name) {
+    switch (name) {
+      case AppStrings.sports:
+        return Icons.sports_basketball;
+      case AppStrings.music:
+        return Icons.music_note;
+      case AppStrings.food:
+      case 'Food & Drink':
+      case 'Miscellaneous':
+        return Icons.restaurant;
+      case AppStrings.art:
+      case 'Arts & Theatre':
+      case 'Film':
+        return Icons.palette_outlined;
+      default:
+        return Icons.event;
+    }
   }
 }

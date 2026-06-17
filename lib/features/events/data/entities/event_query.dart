@@ -31,6 +31,11 @@ class EventQuery {
 
   bool get hasPriceFilter => minPrice != null && maxPrice != null;
 
+  bool get hasFilters =>
+      classificationName.trim().isNotEmpty ||
+      datePreset != EventDatePreset.any ||
+      hasPriceFilter;
+
   EventQuery copyWith({
     String? keyword,
     String? city,
@@ -58,6 +63,37 @@ class EventQuery {
       mode: mode ?? this.mode,
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        other is EventQuery &&
+            runtimeType == other.runtimeType &&
+            keyword == other.keyword &&
+            city == other.city &&
+            classificationName == other.classificationName &&
+            datePreset == other.datePreset &&
+            customDate == other.customDate &&
+            minPrice == other.minPrice &&
+            maxPrice == other.maxPrice &&
+            page == other.page &&
+            size == other.size &&
+            mode == other.mode;
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    keyword,
+    city,
+    classificationName,
+    datePreset,
+    customDate,
+    minPrice,
+    maxPrice,
+    page,
+    size,
+    mode,
+  );
 }
 
 class EventPage {

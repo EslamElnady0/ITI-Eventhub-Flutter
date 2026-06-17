@@ -18,7 +18,11 @@ class SearchCubit extends Cubit<SearchState> {
   EventQuery _query = const EventQuery();
   int _requestId = 0;
 
-  Future<void> loadInitial() => _search(refresh: true);
+  Future<void> loadInitial({EventQuery initialQuery = const EventQuery()}) {
+    _query = initialQuery.copyWith(page: 0);
+    emit(state.copyWith(query: _query));
+    return _search(refresh: true);
+  }
 
   void keywordChanged(String keyword) {
     _debounce?.cancel();
@@ -71,6 +75,7 @@ class SearchCubit extends Cubit<SearchState> {
         status: state.events.isEmpty || refresh
             ? SearchStatus.loading
             : state.status,
+        query: _query.copyWith(page: nextPage),
         isLoadingMore: !refresh,
         errorMessage: '',
       ),
@@ -87,6 +92,7 @@ class SearchCubit extends Cubit<SearchState> {
         emit(
           state.copyWith(
             status: SearchStatus.success,
+            query: _query.copyWith(page: page.page),
             events: refresh ? page.events : [...state.events, ...page.events],
             page: page.page,
             hasMore: page.hasMore,

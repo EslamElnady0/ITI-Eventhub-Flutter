@@ -5,6 +5,7 @@ enum SearchStatus { initial, loading, success, failure }
 class SearchState extends Equatable {
   const SearchState({
     this.status = SearchStatus.initial,
+    this.query = const EventQuery(),
     this.events = const [],
     this.page = 0,
     this.hasMore = true,
@@ -13,6 +14,7 @@ class SearchState extends Equatable {
   });
 
   final SearchStatus status;
+  final EventQuery query;
   final List<EventEntity> events;
   final int page;
   final bool hasMore;
@@ -21,6 +23,7 @@ class SearchState extends Equatable {
 
   SearchState copyWith({
     SearchStatus? status,
+    EventQuery? query,
     List<EventEntity>? events,
     int? page,
     bool? hasMore,
@@ -29,6 +32,7 @@ class SearchState extends Equatable {
   }) {
     return SearchState(
       status: status ?? this.status,
+      query: query ?? this.query,
       events: events ?? this.events,
       page: page ?? this.page,
       hasMore: hasMore ?? this.hasMore,
@@ -40,6 +44,7 @@ class SearchState extends Equatable {
   @override
   List<Object?> get props => [
     status,
+    query,
     events,
     page,
     hasMore,

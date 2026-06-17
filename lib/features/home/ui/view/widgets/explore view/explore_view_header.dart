@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:iti_flutter_proj/core/assets/assets.dart';
 
 import '../../../../../../core/helpers/spacing.dart';
+import '../../../../../events/data/entities/event_query.dart';
 import '../../../../../events/ui/view/search_view.dart';
 import '../../../../../events/ui/view/widgets/filter/event_filter_bottom_sheet.dart';
 import 'categories_list.dart';
@@ -58,7 +59,7 @@ class ExploreViewHeader extends StatelessWidget {
                 SearchBarWidget(
                   readOnly: true,
                   onTap: () => context.push(SearchView.routeName),
-                  onFilterTap: () => EventFilterBottomSheet.show(context),
+                  onFilterTap: () => _showFilters(context),
                 ),
               ],
             ),
@@ -67,9 +68,40 @@ class ExploreViewHeader extends StatelessWidget {
             left: 0,
             right: 0,
             bottom: 0,
-            child: CategoriesList(categories: categories),
+            child: CategoriesList(
+              categories: categories,
+              onSelected: (category) => context.push(
+                SearchView.routeName,
+                extra: SearchViewArgs.category(
+                  category: category,
+                  categories: categories,
+                ),
+              ),
+            ),
           ),
         ],
+      ),
+    );
+  }
+
+  Future<void> _showFilters(BuildContext context) async {
+    final selection = await EventFilterBottomSheet.show(
+      context,
+      categories: categories,
+    );
+    if (selection == null || !context.mounted) return;
+
+    context.push(
+      SearchView.routeName,
+      extra: SearchViewArgs(
+        categories: categories,
+        initialQuery: EventQuery(
+          classificationName: selection.classificationName,
+          datePreset: selection.datePreset,
+          customDate: selection.customDate,
+          minPrice: selection.minPrice,
+          maxPrice: selection.maxPrice,
+        ),
       ),
     );
   }

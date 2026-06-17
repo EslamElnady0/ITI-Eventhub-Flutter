@@ -10,6 +10,7 @@ import 'filter_date_section.dart';
 import 'filter_location_tile.dart';
 import 'filter_price_range_section.dart';
 import '../../../../data/entities/event_query.dart';
+import '../../../../../home/data/entities/home_category_entity.dart';
 
 class EventFilterSelection {
   const EventFilterSelection({
@@ -28,14 +29,28 @@ class EventFilterSelection {
 }
 
 class EventFilterBottomSheet extends StatefulWidget {
-  const EventFilterBottomSheet({super.key});
+  const EventFilterBottomSheet({
+    super.key,
+    required this.categories,
+    required this.initialQuery,
+  });
 
-  static Future<EventFilterSelection?> show(BuildContext context) {
+  final List<HomeCategoryEntity> categories;
+  final EventQuery initialQuery;
+
+  static Future<EventFilterSelection?> show(
+    BuildContext context, {
+    List<HomeCategoryEntity> categories = const [],
+    EventQuery initialQuery = const EventQuery(),
+  }) {
     return showModalBottomSheet<EventFilterSelection>(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (context) => const EventFilterBottomSheet(),
+      builder: (context) => EventFilterBottomSheet(
+        categories: categories,
+        initialQuery: initialQuery,
+      ),
     );
   }
 
@@ -49,6 +64,27 @@ class EventFilterBottomSheetState extends State<EventFilterBottomSheet> {
   RangeValues priceValues = const RangeValues(0, 150);
   DateTime? customDate;
   bool priceFilterEnabled = false;
+
+  @override
+  void initState() {
+    super.initState();
+    final query = widget.initialQuery;
+    final categoryOptions = _categoryOptions;
+    selectedCategoryIndex = categoryOptions.indexWhere(
+      (category) => category.apiName == query.classificationName,
+    );
+    selectedDateIndex = _dateIndexFor(query.datePreset);
+    customDate = query.datePreset == EventDatePreset.custom
+        ? query.customDate
+        : null;
+    priceFilterEnabled = query.hasPriceFilter;
+    if (query.hasPriceFilter) {
+      priceValues = RangeValues(
+        query.minPrice!.clamp(0, 150),
+        query.maxPrice!.clamp(0, 150),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,6 +115,7 @@ class EventFilterBottomSheetState extends State<EventFilterBottomSheet> {
             Text(AppStrings.filter, style: AppTextStyles.font24Bold),
             vGap(18),
             FilterCategoriesList(
+              categories: widget.categories,
               selectedIndex: selectedCategoryIndex,
               onSelected: (index) {
                 setState(() => selectedCategoryIndex = index);
@@ -144,11 +181,31 @@ class EventFilterBottomSheetState extends State<EventFilterBottomSheet> {
   }
 
   String get _classificationName {
-    const values = ['sports', 'music', 'Arts & Theatre', 'Food & Drink'];
+    final values = _categoryOptions;
     if (selectedCategoryIndex < 0 || selectedCategoryIndex >= values.length) {
       return '';
     }
-    return values[selectedCategoryIndex];
+    return values[selectedCategoryIndex].apiName;
+  }
+
+  List<HomeCategoryEntity> get _categoryOptions {
+    return widget.categories.isEmpty
+        ? FilterCategoriesList.fallbackCategories
+        : widget.categories;
+  }
+
+  int _dateIndexFor(EventDatePreset preset) {
+    switch (preset) {
+      case EventDatePreset.today:
+        return 0;
+      case EventDatePreset.tomorrow:
+        return 1;
+      case EventDatePreset.thisWeek:
+        return 2;
+      case EventDatePreset.any:
+      case EventDatePreset.custom:
+        return -1;
+    }
   }
 
   EventDatePreset get _datePreset {

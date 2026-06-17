@@ -164,17 +164,26 @@ class AppRouter {
       ),
       GoRoute(
         path: SearchView.routeName,
-        pageBuilder: (context, state) => _buildPageWithTransition(
-          context,
-          state,
-          MultiBlocProvider(
-            providers: [
-              BlocProvider(create: (_) => getIt<SearchCubit>()..loadInitial()),
-              BlocProvider.value(value: getIt<FavoritesCubit>()..load()),
-            ],
-            child: const SearchView(),
-          ),
-        ),
+        pageBuilder: (context, state) {
+          final args = state.extra is SearchViewArgs
+              ? state.extra! as SearchViewArgs
+              : const SearchViewArgs();
+          return _buildPageWithTransition(
+            context,
+            state,
+            MultiBlocProvider(
+              providers: [
+                BlocProvider(
+                  create: (_) =>
+                      getIt<SearchCubit>()
+                        ..loadInitial(initialQuery: args.initialQuery),
+                ),
+                BlocProvider.value(value: getIt<FavoritesCubit>()..load()),
+              ],
+              child: SearchView(categories: args.categories),
+            ),
+          );
+        },
       ),
       GoRoute(
         path: EventsListView.routeName,
