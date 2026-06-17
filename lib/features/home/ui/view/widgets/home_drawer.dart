@@ -64,7 +64,7 @@ class HomeDrawer extends StatelessWidget {
                 Icons.calendar_month_outlined,
                 color: AppColors.darkGray,
               ),
-              title: const Text(AppStrings.calendar),
+              title: const Text(AppStrings.events),
               onTap: onCalendarTap,
             ),
             ListTile(
