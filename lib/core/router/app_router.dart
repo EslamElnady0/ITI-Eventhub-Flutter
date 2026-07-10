@@ -126,7 +126,10 @@ class AppRouter {
             routes: [
               GoRoute(
                 path: MapView.routeName,
-                builder: (context, state) => const MapView(),
+                builder: (context, state) => BlocProvider(
+                  create: (_) => getIt<EventsListCubit>(param1: EventListMode.nearby)..load(),
+                  child: const MapView(),
+                ),
               ),
             ],
           ),

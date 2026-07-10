@@ -4,6 +4,10 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
+val mapsApiKey: String = gradleLocalProperties(rootDir, providers).getProperty("MAPS_API_KEY") ?: ""
+
 android {
     namespace = "com.example.iti_flutter_proj"
     compileSdk = flutter.compileSdkVersion
@@ -23,6 +27,7 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        manifestPlaceholders["MAPS_API_KEY"] = mapsApiKey
     }
 
     buildTypes {
